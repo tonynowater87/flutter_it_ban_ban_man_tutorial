@@ -116,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
         items: _createBottomNavigationBarItem(context),
-        onTap: (index) => _showToast(index.toString()),
+        onTap: (index) => Navigator.pushReplacementNamed(context, "/"),
       ),
     );
   }
@@ -139,5 +139,14 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.red,
         textColor: Colors.white,
         fontSize: 16.0);
+  }
+}
+
+class _MySecondPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Text('second page')
+    );
   }
 }
