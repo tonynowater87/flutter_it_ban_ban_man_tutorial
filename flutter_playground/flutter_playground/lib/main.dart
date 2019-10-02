@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_playground/generated/i18n.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 void main() => runApp(MyApp());
 
@@ -111,6 +113,31 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        items: _createBottomNavigationBarItem(context),
+        onTap: (index) => _showToast(index.toString()),
+      ),
     );
+  }
+
+  List<BottomNavigationBarItem> _createBottomNavigationBarItem(
+      BuildContext context) {
+    return [
+      BottomNavigationBarItem(icon: Icon(Icons.add), title: Text('item1')),
+      BottomNavigationBarItem(icon: Icon(Icons.backup), title: Text('item2')),
+      BottomNavigationBarItem(icon: Icon(Icons.adb), title: Text('item3')),
+    ];
+  }
+
+  _showToast(String msg) {
+    Fluttertoast.showToast(
+        msg: msg,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIos: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 }
