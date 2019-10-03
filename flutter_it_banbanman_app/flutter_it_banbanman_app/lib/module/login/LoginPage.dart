@@ -4,8 +4,22 @@ import 'package:flutter_it_banbanman_app/routes.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 
 // 登入頁面
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
+
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  bool _isHidden = true;
+
+  void _toggleVisibility() {
+    setState(() {
+      print('[Tony] _toggleVisibility:$_isHidden');
+      _isHidden = !_isHidden;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +49,15 @@ class LoginPage extends StatelessWidget {
             Padding(
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 child: TextFormField(
+                  obscureText: _isHidden,
                   decoration: InputDecoration(
                     labelText: "Password",
                     prefixIcon: Icon(Icons.lock),
-                    suffixIcon: Icon(Icons.remove_red_eye),
+                    suffixIcon: IconButton(
+                        icon: _isHidden
+                            ? Icon(Icons.visibility_off)
+                            : Icon(Icons.visibility),
+                        onPressed: _toggleVisibility),
                     hintText: "Your Github account password ...",
                   ),
                 )),
