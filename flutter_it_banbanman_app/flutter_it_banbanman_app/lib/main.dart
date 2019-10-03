@@ -80,7 +80,7 @@ class MainPage extends StatelessWidget {
         body: TabBarView(
           children: <Widget>[
             HomePage(),
-            Text("Repo"),
+            RepoPage(),
             Text("Activity"),
             Text("Issues"),
           ],
@@ -141,6 +141,53 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class RepoPage extends StatelessWidget {
+  final repoList = [
+    {
+      "title": "BbsonLin/gitme_reborn",
+      "description": "No description provided.\n\n★ 0",
+      "lang": "● Dart"
+    },
+    {
+      "title": "BbsonLin/ithome-ironman",
+      "description": "No description provided.\n\n★ 0",
+      "lang": ""
+    },
+    {
+      "title": "BbsonLin/flask-request-logger",
+      "description": "",
+      "lang": "● Python"
+    },
+    {
+      "title": "BbsonLin/flask-request-logger",
+      "description":
+          "A Flask extension for recording requests and responses into database\n\n★ 3",
+      "lang": "● Python"
+    },
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: ListView.separated(
+          itemBuilder: (BuildContext context, int index) => ListTile(
+                title: Text(repoList[index]["title"]),
+                subtitle: Text(repoList[index]["description"]),
+                trailing: Text(repoList[index]["lang"]),
+                isThreeLine: false,
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                onTap: () {},
+              ),
+          separatorBuilder: (BuildContext context, int index) => Divider(
+                height: 0,
+                color: Colors.grey,
+              ),
+          itemCount: repoList.length),
     );
   }
 }
