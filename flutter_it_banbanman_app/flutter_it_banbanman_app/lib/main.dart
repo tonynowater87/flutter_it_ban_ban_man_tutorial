@@ -60,11 +60,33 @@ class MainPage extends StatelessWidget {
                   backgroundImage: NetworkImage(
                       "https://avatars0.githubusercontent.com/u/26626322?s=40&v=4"),
                 ),
-                otherAccountsPictures: <Widget>[Icon(Icons.edit, color: Colors.white,)],
+                otherAccountsPictures: <Widget>[
+                  Icon(
+                    Icons.edit,
+                    color: Colors.white,
+                  )
+                ],
               ),
-              FlatButton(
-                  child: Text("Log out"),
-                  onPressed: () => showDialog(
+              DrawerTitle(
+                iconData: Icons.trending_up,
+                text: "趨勢",
+                onPressed: () {
+                  print('[Tony] 趨勢');
+                },
+              ),
+              DrawerTitle(
+                iconData: Icons.settings,
+                text: "設定",
+              ),
+              DrawerTitle(
+                iconData: Icons.info,
+                text: "關於",
+              ),
+              DrawerTitle(
+                iconData: Icons.power_settings_new,
+                text: "登出",
+                onPressed: () async {
+                  await showDialog(
                       context: context,
                       barrierDismissible: false,
                       builder: (context) => AlertDialog(
@@ -83,7 +105,9 @@ class MainPage extends StatelessWidget {
                                         ModalRoute.withName(RoutesTable.login)),
                               )
                             ],
-                          )))
+                          ));
+                },
+              )
             ],
           ),
         ),
@@ -200,6 +224,28 @@ class RepoPage extends StatelessWidget {
                 color: Colors.grey,
               ),
           itemCount: repoList.length),
+    );
+  }
+}
+
+class DrawerTitle extends StatelessWidget {
+  final IconData iconData;
+  final String text;
+  final Function onPressed;
+
+  const DrawerTitle({Key key, this.iconData, this.text = "", this.onPressed})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Row(
+        children: <Widget>[Icon(iconData), SizedBox(width: 24.0), Text(text)],
+      ),
+      onTap: onPressed ??
+          () {
+            print('[Tony] "not set onPressed"');
+          },
     );
   }
 }
