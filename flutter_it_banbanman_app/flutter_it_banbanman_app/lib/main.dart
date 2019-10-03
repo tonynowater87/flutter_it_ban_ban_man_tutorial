@@ -56,10 +56,24 @@ class MainPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               RaisedButton(
-                child: Text("Log out"),
-                onPressed: () =>
-                    Navigator.pushReplacementNamed(context, RoutesTable.login),
-              )
+                  child: Text("Log out"),
+                  onPressed: () => showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (context) => AlertDialog(
+                            content: Text("確定登出?"),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text("取消"),
+                                onPressed: () => Navigator.pop(context),
+                              ),
+                              FlatButton(
+                                child: Text("確定"),
+                                onPressed: () => Navigator.pushReplacementNamed(
+                                    context, RoutesTable.login),
+                              )
+                            ],
+                          )))
             ],
           ),
         )),
