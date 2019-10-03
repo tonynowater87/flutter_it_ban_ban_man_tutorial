@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_it_banbanman_app/routes.dart';
 
@@ -38,7 +39,7 @@ class LoginPage extends StatelessWidget {
       appBar: AppBar(
         title: Container(
           alignment: Alignment.centerLeft,
-          child: Text("Login"),
+          child: Text("登入"),
         ),
       ),
       body: Column(
@@ -93,6 +94,7 @@ class MainPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: TabBar(
+            labelPadding: EdgeInsets.all(0),
             tabs: <Widget>[
               Tab(text: "Home"),
               Tab(text: "Repo"),
@@ -110,12 +112,75 @@ class MainPage extends StatelessWidget {
             children: <Widget>[
               RaisedButton(
                 child: Text("Log out"),
-                onPressed: () => Navigator.pushReplacementNamed(
-                    context, RoutesTable.login),
+                onPressed: () =>
+                    Navigator.pushReplacementNamed(context, RoutesTable.login),
               )
             ],
           ),
         )),
+        body: TabBarView(
+          children: <Widget>[
+            HomePage(),
+            Text("Repo"),
+            Text("Activity"),
+            Text("Issues"),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: ListView(
+        children: <Widget>[
+          ListTile(
+            title: Text(
+              "最新",
+              style: TextStyle(fontSize: 20, color: Colors.red),
+            ),
+          ),
+          Divider(
+            height: 0,
+            thickness: 0,
+            color: Colors.blueGrey,
+          ),
+          ListTile(
+            title: Text(
+              "歡迎使用Gitme v1.1.1",
+              style: TextStyle(fontSize: 20, color: Colors.black),
+            ),
+            subtitle: Text("每一位用戶都是gitme的主人!"),
+            onTap: () => {},
+          ),
+          Divider(
+            height: 0,
+            thickness: 10,
+            color: Colors.grey,
+          ),
+          ListTile(
+            title: Text(
+              "推薦項目",
+              style: TextStyle(fontSize: 20, color: Colors.green),
+            ),
+          ),
+          Divider(
+            height: 0,
+            thickness: 0,
+            color: Colors.blueGrey,
+          ),
+          ListTile(
+            title: Text(
+              "flukit",
+              style: TextStyle(fontSize: 20, color: Colors.black),
+            ),
+            subtitle: Text("A Flutter UI Kit"),
+            onTap: () => {},
+          ),
+        ],
       ),
     );
   }
