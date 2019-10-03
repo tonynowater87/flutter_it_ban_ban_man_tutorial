@@ -52,12 +52,15 @@ class MainPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(20),
-                height: 250,
-                color: Colors.black12,
-                alignment: Alignment.bottomLeft,
-                child: Text("User"),
+              UserAccountsDrawerHeader(
+                decoration: BoxDecoration(color: Colors.blueGrey),
+                accountName: Text("Tony"),
+                accountEmail: Text("Tony@gmail.com"),
+                currentAccountPicture: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                      "https://avatars0.githubusercontent.com/u/26626322?s=40&v=4"),
+                ),
+                otherAccountsPictures: <Widget>[Icon(Icons.edit, color: Colors.white,)],
               ),
               FlatButton(
                   child: Text("Log out"),
