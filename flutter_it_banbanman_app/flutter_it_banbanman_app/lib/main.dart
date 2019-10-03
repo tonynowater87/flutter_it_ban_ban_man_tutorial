@@ -13,12 +13,12 @@ class GitmeRebornApp extends StatelessWidget {
         primarySwatch: Colors.blueGrey,
       ),
       routes: {
-        GitmeRebornRoutes.login: (context) => LoginPage(),
-        GitmeRebornRoutes.home: (context) => MainPage(),
+        RoutesTable.login: (context) => LoginPage(),
+        RoutesTable.home: (context) => MainPage(),
       },
       onGenerateRoute: (settings) {
         switch (settings.name) {
-          case GitmeRebornRoutes.root:
+          case RoutesTable.root:
             return MaterialPageRoute(builder: (context) => LoginPage());
           default:
             return MaterialPageRoute(builder: (context) => LoginPage());
@@ -36,11 +36,17 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login"),
+        title: Container(
+          alignment: Alignment.centerLeft,
+          child: Text("Login"),
+        ),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
+          SizedBox(
+            height: 25,
+          ),
           Padding(
               padding: EdgeInsets.all(20),
               child: TextFormField(
@@ -53,16 +59,21 @@ class LoginPage extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
               child: TextFormField(
                 decoration: InputDecoration(
-                    labelText: "Password",
-                    prefixIcon: Icon(Icons.lock),
-                    hintText: "Your Github account password ..."),
+                  labelText: "Password",
+                  prefixIcon: Icon(Icons.lock),
+                  hintText: "Your Github account password ...",
+                ),
               )),
           SizedBox(
+            height: 25,
+          ),
+          Container(
             width: 200,
             height: 50,
+            color: Colors.black12,
             child: FlatButton(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, GitmeRebornRoutes.home);
+                Navigator.pushReplacementNamed(context, RoutesTable.home);
               },
               child: Text("Login"),
             ),
@@ -90,6 +101,21 @@ class MainPage extends StatelessWidget {
             ],
           ),
         ),
+        drawer: Drawer(
+            child: Padding(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              RaisedButton(
+                child: Text("Log out"),
+                onPressed: () => Navigator.pushReplacementNamed(
+                    context, RoutesTable.login),
+              )
+            ],
+          ),
+        )),
       ),
     );
   }
