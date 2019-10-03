@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_it_banbanman_app/module/login/LoginPage.dart';
+import 'package:flutter_it_banbanman_app/module/search/MySearchDelegate.dart';
 import 'package:flutter_it_banbanman_app/routes.dart';
 
 void main() => runApp(GitmeRebornApp());
@@ -47,6 +48,14 @@ class MainPage extends StatelessWidget {
               Tab(text: "Issues"),
             ],
           ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                showSearch(context: context, delegate: MySearchDelegate());
+              },
+            )
+          ],
         ),
         drawer: Drawer(
           child: Column(
