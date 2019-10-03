@@ -73,6 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () {
                   final progress = ProgressHUD.of(context);
                   progress.showWithText("Loading...");
+                  FocusScope.of(context).unfocus(); // dismiss the keyboard
                   Future.delayed(Duration(seconds: 1), () {
                     Navigator.pushReplacementNamed(context, RoutesTable.home);
                     progress.dismiss();
