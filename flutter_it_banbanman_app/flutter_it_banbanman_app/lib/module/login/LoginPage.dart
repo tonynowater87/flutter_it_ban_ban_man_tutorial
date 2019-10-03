@@ -55,7 +55,7 @@ class LoginPage extends StatelessWidget {
                   final progress = ProgressHUD.of(context);
                   progress.showWithText("Loading...");
                   Future.delayed(Duration(seconds: 2), () {
-                    Navigator.pushReplacementNamed(context, "/home");
+                    Navigator.pushReplacementNamed(context, RoutesTable.home);
                     progress.dismiss();
                   });
                 },

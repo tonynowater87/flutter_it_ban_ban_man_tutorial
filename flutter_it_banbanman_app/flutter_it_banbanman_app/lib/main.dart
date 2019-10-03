@@ -49,13 +49,17 @@ class MainPage extends StatelessWidget {
           ),
         ),
         drawer: Drawer(
-            child: Padding(
-          padding: EdgeInsets.all(20),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              RaisedButton(
+              Container(
+                padding: EdgeInsets.all(20),
+                height: 250,
+                color: Colors.black12,
+                alignment: Alignment.bottomLeft,
+                child: Text("User"),
+              ),
+              FlatButton(
                   child: Text("Log out"),
                   onPressed: () => showDialog(
                       context: context,
@@ -69,14 +73,17 @@ class MainPage extends StatelessWidget {
                               ),
                               FlatButton(
                                 child: Text("確定"),
-                                onPressed: () => Navigator.pushReplacementNamed(
-                                    context, RoutesTable.login),
+                                onPressed: () =>
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        RoutesTable.login,
+                                        ModalRoute.withName(RoutesTable.login)),
                               )
                             ],
                           )))
             ],
           ),
-        )),
+        ),
         body: TabBarView(
           children: <Widget>[
             HomePage(),
@@ -113,6 +120,7 @@ class HomePage extends StatelessWidget {
               style: TextStyle(fontSize: 20, color: Colors.black),
             ),
             subtitle: Text("每一位用戶都是gitme的主人!"),
+            trailing: Icon(Icons.arrow_forward_ios),
             onTap: () => {},
           ),
           Divider(
@@ -137,6 +145,7 @@ class HomePage extends StatelessWidget {
               style: TextStyle(fontSize: 20, color: Colors.black),
             ),
             subtitle: Text("A Flutter UI Kit"),
+            trailing: Icon(Icons.arrow_forward_ios),
             onTap: () => {},
           ),
         ],
