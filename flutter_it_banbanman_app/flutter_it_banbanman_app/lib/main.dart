@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_it_banbanman_app/module/login/LoginPage.dart';
+import 'package:flutter_it_banbanman_app/module/profile/profile.dart';
 import 'package:flutter_it_banbanman_app/module/search/MySearchDelegate.dart';
 import 'package:flutter_it_banbanman_app/routes.dart';
 
@@ -18,6 +19,7 @@ class GitmeRebornApp extends StatelessWidget {
       routes: {
         RoutesTable.login: (context) => LoginPage(),
         RoutesTable.home: (context) => MainPage(),
+        RoutesTable.profile: (context) => ProfilePage(),
       },
       onGenerateRoute: (settings) {
         switch (settings.name) {
@@ -65,9 +67,14 @@ class MainPage extends StatelessWidget {
                 decoration: BoxDecoration(color: Colors.blueGrey),
                 accountName: Text("Tony"),
                 accountEmail: Text("Tony@gmail.com"),
-                currentAccountPicture: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      "https://avatars0.githubusercontent.com/u/26626322?s=40&v=4"),
+                currentAccountPicture: IconButton(
+                  icon: CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        "https://avatars0.githubusercontent.com/u/26626322?s=40&v=4"),
+                  ),
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, RoutesTable.profile);
+                  },
                 ),
                 otherAccountsPictures: <Widget>[
                   Icon(
