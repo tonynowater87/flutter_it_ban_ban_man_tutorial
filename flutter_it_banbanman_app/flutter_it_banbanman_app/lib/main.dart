@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_it_banbanman_app/module/login/LoginPage.dart';
 import 'package:flutter_it_banbanman_app/module/profile/profile.dart';
@@ -73,7 +72,7 @@ class MainPage extends StatelessWidget {
                         "https://avatars0.githubusercontent.com/u/26626322?s=40&v=4"),
                   ),
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, RoutesTable.profile);
+                    Navigator.pushNamed(context, RoutesTable.profile);
                   },
                 ),
                 otherAccountsPictures: <Widget>[
