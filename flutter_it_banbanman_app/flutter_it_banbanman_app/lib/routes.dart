@@ -4,4 +4,5 @@ class RoutesTable {
   static const home = "/home";
   static const profile = "/profile";
   static const trending = "/trending";
+  static const setting = "/setting";
 }

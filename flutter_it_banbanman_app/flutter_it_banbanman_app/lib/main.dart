@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_it_banbanman_app/module/profile/profile.dart';
+import 'package:flutter_it_banbanman_app/module/setting/setting.dart';
 import 'package:flutter_it_banbanman_app/module/trending/trending.dart';
 import 'package:flutter_it_banbanman_app/routes.dart';
 
@@ -22,6 +23,7 @@ class GitmeRebornApp extends StatelessWidget {
         RoutesTable.home: (context) => MainPage(),
         RoutesTable.profile: (context) => ProfilePage(),
         RoutesTable.trending: (context) => TrendingPage(),
+        RoutesTable.setting: (context) => SettingPage(),
       },
       onGenerateRoute: (settings) {
         switch (settings.name) {
@@ -95,6 +97,9 @@ class MainPage extends StatelessWidget {
               DrawerTitle(
                 iconData: Icons.settings,
                 text: "設定",
+                onPressed: () {
+                  Navigator.pushNamed(context, RoutesTable.setting);
+                },
               ),
               DrawerTitle(
                 iconData: Icons.info,
