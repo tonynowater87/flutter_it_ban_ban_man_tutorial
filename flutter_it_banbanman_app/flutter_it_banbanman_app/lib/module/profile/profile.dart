@@ -3,8 +3,9 @@ import 'dart:core';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_it_banbanman_app/main.dart';
-import 'package:flutter_it_banbanman_app/module/profile/ProfileInfo.dart';
 import 'package:flutter_it_banbanman_app/module/profile/followPage.dart';
+
+import 'profile_info.dart';
 
 class ProfilePage extends StatelessWidget {
   final String imageUrl;
@@ -48,7 +49,9 @@ class ProfilePage extends StatelessWidget {
                         name: "Tony Liao",
                         location: "Taichung, Taiwan",
                       ),
-                      SizedBox(height: 48.0,)
+                      SizedBox(
+                        height: 48.0,
+                      )
                     ],
                   )),
                   bottom: TabBar(

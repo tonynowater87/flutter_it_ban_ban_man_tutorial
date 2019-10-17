@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_it_banbanman_app/module/login/LoginPage.dart';
 import 'package:flutter_it_banbanman_app/module/profile/profile.dart';
-import 'package:flutter_it_banbanman_app/module/search/MySearchDelegate.dart';
 import 'package:flutter_it_banbanman_app/routes.dart';
+
+import 'module/login/login_page.dart';
+import 'module/search/search_delegate.dart';
 
 void main() => runApp(GitmeRebornApp());
 
