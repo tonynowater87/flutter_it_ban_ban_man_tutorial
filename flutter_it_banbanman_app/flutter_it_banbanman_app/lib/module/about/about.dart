@@ -21,8 +21,7 @@ class AboutPage extends StatelessWidget {
               ),
               CircleAvatar(
                   radius: 100,
-                  backgroundImage: NetworkImage(
-                      "https://avatars3.githubusercontent.com/u/9815472?s=460&v=4")),
+                  backgroundImage: AssetImage("assets/images/logo.png")),
               SizedBox(
                 height: 20,
               ),
