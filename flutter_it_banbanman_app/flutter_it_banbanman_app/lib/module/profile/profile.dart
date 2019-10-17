@@ -2,6 +2,7 @@ import 'dart:core';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_it_banbanman_app/main.dart';
 
 class ProfilePage extends StatelessWidget {
   final String imageUrl;
@@ -20,71 +21,57 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      child: Scaffold(
-        body: CustomScrollView(slivers: [
-          SliverAppBar(
-            pinned: true,
-            expandedHeight: 250,
-            title: Text("Tony Liao"),
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios), onPressed: () {
-                Navigator.pop(context);
-            },),
-            flexibleSpace: FlexibleSpaceBar(
-                background: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    ProfileInfo(
-                      avatarUrl:
-                          "https://avatars3.githubusercontent.com/u/9815472?s=460&v=4",
-                      name: "Tony Liao",
-                      location: "Taichung, Taiwan",
-                    ),
-                    SizedBox(height: 8.0),
-                    TabBar(
-                      tabs: <Widget>[
-                        Tab(text: "Repos"),
-                        Tab(text: "Starts"),
-                        Tab(text: "Followers"),
-                        Tab(text: "Following"),
-                      ],
-                    )
-                  ],
-                )),
-          ),
-          SliverPadding(
-              padding: EdgeInsets.all(8.0),
-              sliver: SliverFixedExtentList(
-                itemExtent: 50.0,
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    return Container(
-                      alignment: Alignment.center,
-                      color: Colors.lightBlue[100 * (index % 10)],
-                      child: Text("item$index"),
-                    );
-                  },
-                  childCount: 50,
-                ),
-              )),
-          /*SliverFillRemaining(
-            child: SliverFixedExtentList(
-          itemExtent: 50.0,
-          delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
-              return Container(
-                alignment: Alignment.center,
-                color: Colors.lightBlue[100 * (index % 10)],
-                child: Text("item$index"),
-              );
+        child: Scaffold(
+          body: NestedScrollView(
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return <Widget>[
+                SliverAppBar(
+                  pinned: true,
+                  expandedHeight: 250,
+                  title: Text("Tony Liao"),
+                  leading: IconButton(
+                    icon: Icon(Icons.arrow_back_ios),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  flexibleSpace: FlexibleSpaceBar(
+                      background: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      ProfileInfo(
+                        avatarUrl:
+                            "https://avatars3.githubusercontent.com/u/9815472?s=460&v=4",
+                        name: "Tony Liao",
+                        location: "Taichung, Taiwan",
+                      ),
+                      SizedBox(height: 48.0,)
+                    ],
+                  )),
+                  bottom: TabBar(
+                    labelPadding: EdgeInsets.zero,
+                    tabs: <Widget>[
+                      Tab(text: "Repos"),
+                      Tab(text: "Starts"),
+                      Tab(text: "Followers"),
+                      Tab(text: "Following"),
+                    ],
+                  ),
+                )
+              ];
             },
-            childCount: 50,
+            body: TabBarView(
+              children: <Widget>[
+                RepoPage(),
+                Text("Starts"),
+                Text("Followers"),
+                Text("Following"),
+              ],
+            ),
           ),
-        ))*/
-        ]),
-      ),
-      length: 4
-    );
+        ),
+        length: 4);
   }
 }
 

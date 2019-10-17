@@ -232,36 +232,41 @@ class _RepoPageState extends State<RepoPage> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () {
-        return Future.delayed(Duration(seconds: 1), () {
-          setState(() {
-            repoList.add({
-              "title": "refresh new item",
-              "description": "\n\n★ 3",
-              "lang": "● Kotlin"
+          onRefresh: () {
+            return Future.delayed(Duration(seconds: 1), () {
+              setState(() {
+                var obj = {
+                  "title": "refresh new item",
+                  "description": "\n\n★ 3",
+                  "lang": "● Kotlin"
+                };
+                repoList.add(obj);
+                repoList.add(obj);
+                repoList.add(obj);
+              });
             });
-            print('[Tony] onRefresh ${repoList.length}');
-          });
-        });
-      },
-      child: Container(
-        child: ListView.separated(
-            itemBuilder: (BuildContext context, int index) => ListTile(
-                  title: Text(repoList[index]["title"]),
-                  subtitle: Text(repoList[index]["description"]),
-                  trailing: Text(repoList[index]["lang"]),
-                  isThreeLine: false,
-                  contentPadding:
+          },
+          child: Container(
+            child: ListView.separated(
+                padding: EdgeInsets.zero,
+                itemBuilder: (BuildContext context, int index) =>
+                    ListTile(
+                      title: Text(repoList[index]["title"]),
+                      subtitle: Text(repoList[index]["description"]),
+                      trailing: Text(repoList[index]["lang"]),
+                      isThreeLine: false,
+                      contentPadding:
                       EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-                  onTap: () {},
-                ),
-            separatorBuilder: (BuildContext context, int index) => Divider(
-                  height: 0,
-                  color: Colors.grey,
-                ),
-            itemCount: repoList.length),
-      ),
-    );
+                      onTap: () {},
+                    ),
+                separatorBuilder: (BuildContext context, int index) =>
+                    Divider(
+                      height: 0,
+                      color: Colors.grey,
+                    ),
+                itemCount: repoList.length),
+          ),
+        );
   }
 }
 
