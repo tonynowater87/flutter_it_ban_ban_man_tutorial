@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_it_banbanman_app/module/profile/profile.dart';
 import 'package:flutter_it_banbanman_app/module/setting/setting.dart';
+import 'package:flutter_it_banbanman_app/module/setting/setting_language.dart';
 import 'package:flutter_it_banbanman_app/module/trending/trending.dart';
 import 'package:flutter_it_banbanman_app/routes.dart';
 
@@ -24,6 +25,7 @@ class GitmeRebornApp extends StatelessWidget {
         RoutesTable.profile: (context) => ProfilePage(),
         RoutesTable.trending: (context) => TrendingPage(),
         RoutesTable.setting: (context) => SettingPage(),
+        RoutesTable.settingLanguage: (context) => SettingLanguagePage(),
       },
       onGenerateRoute: (settings) {
         switch (settings.name) {

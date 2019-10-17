@@ -5,4 +5,5 @@ class RoutesTable {
   static const profile = "/profile";
   static const trending = "/trending";
   static const setting = "/setting";
+  static const settingLanguage = "/setting/settingLanguage";
 }

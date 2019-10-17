@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_it_banbanman_app/routes.dart';
 
 class SettingPage extends StatelessWidget {
   @override
@@ -55,7 +56,9 @@ class SettingPage extends StatelessWidget {
                 Icon(Icons.keyboard_arrow_right)
               ],
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, RoutesTable.settingLanguage);
+            },
           )
         ],
       ),
