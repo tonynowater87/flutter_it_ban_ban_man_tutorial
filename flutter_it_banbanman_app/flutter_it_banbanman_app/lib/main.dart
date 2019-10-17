@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_it_banbanman_app/module/profile/profile.dart';
+import 'package:flutter_it_banbanman_app/module/trending/trending.dart';
 import 'package:flutter_it_banbanman_app/routes.dart';
 
 import 'module/login/login_page.dart';
@@ -20,6 +21,7 @@ class GitmeRebornApp extends StatelessWidget {
         RoutesTable.login: (context) => LoginPage(),
         RoutesTable.home: (context) => MainPage(),
         RoutesTable.profile: (context) => ProfilePage(),
+        RoutesTable.trending: (context) => TrendingPage(),
       },
       onGenerateRoute: (settings) {
         switch (settings.name) {
@@ -87,7 +89,7 @@ class MainPage extends StatelessWidget {
                 iconData: Icons.trending_up,
                 text: "趨勢",
                 onPressed: () {
-                  print('[Tony] 趨勢');
+                  Navigator.pushNamed(context, RoutesTable.trending);
                 },
               ),
               DrawerTitle(
@@ -285,10 +287,9 @@ class DrawerTitle extends StatelessWidget {
       title: Row(
         children: <Widget>[Icon(iconData), SizedBox(width: 24.0), Text(text)],
       ),
-      onTap: onPressed ??
-          () {
-            print('[Tony] "not set onPressed"');
-          },
+      onTap: onPressed ?? () {
+        print('[Tony] "not set onPressed"');
+      },
     );
   }
 }
