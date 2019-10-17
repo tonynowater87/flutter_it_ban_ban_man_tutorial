@@ -15,12 +15,7 @@ class _SettingLanguagePageState extends State<SettingLanguagePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
+          leading: BackButton(),
           title: Text("Language")),
       body: ListView(
         children: <Widget>[

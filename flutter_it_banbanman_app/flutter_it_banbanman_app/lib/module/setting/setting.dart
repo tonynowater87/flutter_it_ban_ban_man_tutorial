@@ -9,12 +9,7 @@ class SettingPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+        leading: BackButton(),
         title: Text("Setting"),
       ),
       body: ListView(

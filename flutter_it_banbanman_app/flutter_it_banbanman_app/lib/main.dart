@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_it_banbanman_app/module/about/about.dart';
 import 'package:flutter_it_banbanman_app/module/profile/profile.dart';
 import 'package:flutter_it_banbanman_app/module/setting/setting.dart';
 import 'package:flutter_it_banbanman_app/module/setting/setting_language.dart';
@@ -26,6 +27,7 @@ class GitmeRebornApp extends StatelessWidget {
         RoutesTable.trending: (context) => TrendingPage(),
         RoutesTable.setting: (context) => SettingPage(),
         RoutesTable.settingLanguage: (context) => SettingLanguagePage(),
+        RoutesTable.about: (context) => AboutPage(),
       },
       onGenerateRoute: (settings) {
         switch (settings.name) {
@@ -106,6 +108,9 @@ class MainPage extends StatelessWidget {
               DrawerTitle(
                 iconData: Icons.info,
                 text: "關於",
+                onPressed: () {
+                  Navigator.pushNamed(context, RoutesTable.about);
+                },
               ),
               DrawerTitle(
                 iconData: Icons.power_settings_new,

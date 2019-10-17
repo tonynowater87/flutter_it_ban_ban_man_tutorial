@@ -9,12 +9,7 @@ class TrendingPage extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.black,
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
+            leading: BackButton(),
             title: TabBar(
               indicatorColor: Colors.white,
               tabs: <Widget>[Tab(text: "Project"), Tab(text: "Developer")],
