@@ -1,62 +1,116 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hnpwa_client/hnpwa_client.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final HnpwaClient hnpwaClient = HnpwaClient();
+
+  List<FeedItem> tops;
+  List<FeedItem> newsest;
+
+  @override
+  void initState() {
+    super.initState();
+    print('[Tony] initState');
+    fetchNews();
+  }
+
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () {},
-      child: Container(
-        child: ListView(
+        onRefresh: () {}, //todo
+        child: Column(
           children: <Widget>[
-            ListTile(
-              title: Text(
-                "最新",
-                style: TextStyle(fontSize: 20, color: Colors.red),
-              ),
+            Divider(
+              height: 5,
+              thickness: 5.0,
+            ),
+            Flexible(
+              flex: 1,
+              fit: FlexFit.tight,
+              child: buildTop(tops),
             ),
             Divider(
-              height: 0,
-              thickness: 0,
-              color: Colors.blueGrey,
+              height: 5,
+              thickness: 5.0,
             ),
-            ListTile(
-              title: Text(
-                "歡迎使用Gitme v1.1.1",
-                style: TextStyle(fontSize: 20, color: Colors.black),
-              ),
-              subtitle: Text("每一位用戶都是gitme的主人!"),
-              trailing: Icon(Icons.arrow_forward_ios),
-              onTap: () => {},
-            ),
-            Divider(
-              height: 0,
-              thickness: 10,
-              color: Colors.grey,
-            ),
-            ListTile(
-              title: Text(
-                "推薦項目",
-                style: TextStyle(fontSize: 20, color: Colors.green),
-              ),
-            ),
-            Divider(
-              height: 0,
-              thickness: 0,
-              color: Colors.blueGrey,
-            ),
-            ListTile(
-              title: Text(
-                "flukit",
-                style: TextStyle(fontSize: 20, color: Colors.black),
-              ),
-              subtitle: Text("A Flutter UI Kit"),
-              trailing: Icon(Icons.arrow_forward_ios),
-              onTap: () => {},
-            ),
+            Flexible(
+              flex: 1,
+              fit: FlexFit.tight,
+              child: buildTop(newsest),
+            )
           ],
-        ),
-      ),
-    );
+        ));
+  }
+
+  void fetchNews() async {
+    Feed top = await hnpwaClient.news();
+    Feed newsest = await hnpwaClient.newest();
+
+    print('[Tony] fetchNews:$top');
+    print('[Tony] fetchNews:$newsest');
+    setState(() {
+      this.tops = top.items;
+      this.newsest = newsest.items;
+    });
+  }
+
+  Widget buildTop(List<FeedItem> items) {
+    if (items == null) {
+      return Wrap(
+        children: <Widget>[CircularProgressIndicator()],
+      );
+    }
+
+    List<FeedItem> filterTops = items.sublist(0, 7);
+    return ListView.separated(
+        itemBuilder: (context, indexParam) {
+          if (indexParam == 0) {
+            String title;
+            if (items == tops) {
+              title = "Hacker Top News";
+            } else if (items == newsest) {
+              title = "Hacker Lastest News";
+            }
+
+            return ListTile(
+              title: Text(title),
+              trailing: Icon(Icons.keyboard_arrow_right),
+            );
+          } else {
+            var index = --indexParam;
+
+            return ListTile(
+              title: Text(filterTops[index].title),
+              subtitle: Row(
+                children: <Widget>[
+                  Text(" by "),
+                  Text(filterTops[index].user),
+                  Text(" | "),
+                  Text(filterTops[index].commentsCount.toString()),
+                  Text(" comments"),
+                ],
+              ),
+            );
+          }
+        },
+        separatorBuilder: (context, index) {
+          if (index == 0) {
+            return Divider(
+              height: 0,
+              thickness: 5.0,
+            );
+          } else {
+            return Divider(
+              height: 0,
+            );
+          }
+        },
+        itemCount: filterTops.length + 1);
   }
 }
