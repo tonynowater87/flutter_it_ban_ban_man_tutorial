@@ -1,8 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:package_info/package_info.dart';
 
-class AboutPage extends StatelessWidget {
+class AboutPage extends StatefulWidget {
+  AboutPage({Key key}) : super(key: key);
+
+  @override
+  _AboutPageState createState() => _AboutPageState();
+}
+
+class _AboutPageState extends State<AboutPage> {
+
+  String appVersion;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchAppVersion();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +46,7 @@ class AboutPage extends StatelessWidget {
               SizedBox(
                 height: 4,
               ),
-              Text("0.0.1"),
+              Text(appVersion ?? ""),
             ],
           ),
           Column(children: <Widget>[
@@ -42,5 +59,13 @@ class AboutPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void fetchAppVersion() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      appVersion = packageInfo.version;
+      print('[Tony] appVersion:$appVersion');
+    });
   }
 }
