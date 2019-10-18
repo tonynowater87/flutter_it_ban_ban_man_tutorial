@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_it_banbanman_app/module/api/github_api.dart';
+import 'package:github/server.dart';
 
 class RepoPage extends StatefulWidget {
   @override
@@ -7,65 +9,76 @@ class RepoPage extends StatefulWidget {
 }
 
 class _RepoPageState extends State<RepoPage> {
-  final repoList = [
-    {
-      "title": "BbsonLin/gitme_reborn",
-      "description": "No description provided.\n\n★ 0",
-      "lang": "● Dart"
-    },
-    {
-      "title": "BbsonLin/ithome-ironman",
-      "description": "No description provided.\n\n★ 0",
-      "lang": ""
-    },
-    {
-      "title": "BbsonLin/flask-request-logger",
-      "description": "",
-      "lang": "● Python"
-    },
-    {
-      "title": "BbsonLin/flask-request-logger",
-      "description":
-          "A Flask extension for recording requests and responses into database\n\n★ 3",
-      "lang": "● Python"
-    },
-  ];
+  Future<List<Repository>> remoteRepoList;
+
+  @override
+  void initState() {
+    super.initState();
+    remoteRepoList = fetchRepos();
+  }
 
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () {
         return Future.delayed(Duration(seconds: 1), () {
-          setState(() {
-            var obj = {
-              "title": "refresh new item",
-              "description": "\n\n★ 3",
-              "lang": "● Kotlin"
-            };
-            repoList.add(obj);
-            repoList.add(obj);
-            repoList.add(obj);
-          });
+          fetchRepos();
         });
       },
       child: Container(
-        child: ListView.separated(
-            padding: EdgeInsets.zero,
-            itemBuilder: (BuildContext context, int index) => ListTile(
-                  title: Text(repoList[index]["title"]),
-                  subtitle: Text(repoList[index]["description"]),
-                  trailing: Text(repoList[index]["lang"]),
-                  isThreeLine: false,
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-                  onTap: () {},
-                ),
-            separatorBuilder: (BuildContext context, int index) => Divider(
-                  height: 0,
-                  color: Colors.grey,
-                ),
-            itemCount: repoList.length),
-      ),
+          child: FutureBuilder(
+        future: remoteRepoList,
+        builder: (BuildContext context, AsyncSnapshot<List<Repository>> snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.done:
+              if (!snapshot.hasError) {
+                print('[Tony] ConnectionState.done');
+                return ListView.separated(
+                    itemBuilder: (BuildContext context, int index) {
+                      final data = snapshot.data[index];
+                      final description = data.description ?? "No description provided.";
+                      return ListTile(
+                        contentPadding: EdgeInsets.all(8),
+                        title: Text(data.fullName),
+                        trailing: Text(data.language),
+                        subtitle:
+                            Text("$description\n★ ${data.stargazersCount}"),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return Divider(
+                        height: 0,
+                      );
+                    },
+                    itemCount: snapshot.data.length);
+              } else {
+                return Center(
+                  child: Text("No Data"),
+                );
+              }
+              break;
+            case ConnectionState.none:
+              print('[Tony] ConnectionState.none');
+              break;
+            case ConnectionState.waiting:
+              print('[Tony] ConnectionState.waiting');
+              break;
+            case ConnectionState.active:
+              print('[Tony] ConnectionState.active');
+              break;
+          }
+
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      )),
     );
+  }
+
+  Future<List<Repository>> fetchRepos() async {
+    CurrentUser user = await gitHub.users.getCurrentUser();
+    print('[Tony] user:$user');
+    return gitHub.repositories.listUserRepositories(user.login).toList();
   }
 }
