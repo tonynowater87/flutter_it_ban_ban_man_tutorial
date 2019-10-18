@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_it_banbanman_app/module/about/about.dart';
+import 'package:flutter_it_banbanman_app/module/main/home.dart';
+import 'package:flutter_it_banbanman_app/module/main/repo.dart';
 import 'package:flutter_it_banbanman_app/module/profile/profile.dart';
 import 'package:flutter_it_banbanman_app/module/setting/setting.dart';
 import 'package:flutter_it_banbanman_app/module/setting/setting_language.dart';
 import 'package:flutter_it_banbanman_app/module/trending/trending.dart';
-import 'package:flutter_it_banbanman_app/routes.dart';
+import 'package:flutter_it_banbanman_app/module/common/routes.dart';
 
-import 'module/login/login_page.dart';
-import 'module/search/search_delegate.dart';
+import '../login/login_page.dart';
+import '../search/search_delegate.dart';
 
 void main() => runApp(GitmeRebornApp());
 
@@ -151,137 +153,6 @@ class MainPage extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () {},
-      child: Container(
-        child: ListView(
-          children: <Widget>[
-            ListTile(
-              title: Text(
-                "最新",
-                style: TextStyle(fontSize: 20, color: Colors.red),
-              ),
-            ),
-            Divider(
-              height: 0,
-              thickness: 0,
-              color: Colors.blueGrey,
-            ),
-            ListTile(
-              title: Text(
-                "歡迎使用Gitme v1.1.1",
-                style: TextStyle(fontSize: 20, color: Colors.black),
-              ),
-              subtitle: Text("每一位用戶都是gitme的主人!"),
-              trailing: Icon(Icons.arrow_forward_ios),
-              onTap: () => {},
-            ),
-            Divider(
-              height: 0,
-              thickness: 10,
-              color: Colors.grey,
-            ),
-            ListTile(
-              title: Text(
-                "推薦項目",
-                style: TextStyle(fontSize: 20, color: Colors.green),
-              ),
-            ),
-            Divider(
-              height: 0,
-              thickness: 0,
-              color: Colors.blueGrey,
-            ),
-            ListTile(
-              title: Text(
-                "flukit",
-                style: TextStyle(fontSize: 20, color: Colors.black),
-              ),
-              subtitle: Text("A Flutter UI Kit"),
-              trailing: Icon(Icons.arrow_forward_ios),
-              onTap: () => {},
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class RepoPage extends StatefulWidget {
-  @override
-  _RepoPageState createState() => _RepoPageState();
-}
-
-class _RepoPageState extends State<RepoPage> {
-  final repoList = [
-    {
-      "title": "BbsonLin/gitme_reborn",
-      "description": "No description provided.\n\n★ 0",
-      "lang": "● Dart"
-    },
-    {
-      "title": "BbsonLin/ithome-ironman",
-      "description": "No description provided.\n\n★ 0",
-      "lang": ""
-    },
-    {
-      "title": "BbsonLin/flask-request-logger",
-      "description": "",
-      "lang": "● Python"
-    },
-    {
-      "title": "BbsonLin/flask-request-logger",
-      "description":
-          "A Flask extension for recording requests and responses into database\n\n★ 3",
-      "lang": "● Python"
-    },
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return RefreshIndicator(
-          onRefresh: () {
-            return Future.delayed(Duration(seconds: 1), () {
-              setState(() {
-                var obj = {
-                  "title": "refresh new item",
-                  "description": "\n\n★ 3",
-                  "lang": "● Kotlin"
-                };
-                repoList.add(obj);
-                repoList.add(obj);
-                repoList.add(obj);
-              });
-            });
-          },
-          child: Container(
-            child: ListView.separated(
-                padding: EdgeInsets.zero,
-                itemBuilder: (BuildContext context, int index) =>
-                    ListTile(
-                      title: Text(repoList[index]["title"]),
-                      subtitle: Text(repoList[index]["description"]),
-                      trailing: Text(repoList[index]["lang"]),
-                      isThreeLine: false,
-                      contentPadding:
-                      EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-                      onTap: () {},
-                    ),
-                separatorBuilder: (BuildContext context, int index) =>
-                    Divider(
-                      height: 0,
-                      color: Colors.grey,
-                    ),
-                itemCount: repoList.length),
-          ),
-        );
   }
 }
 

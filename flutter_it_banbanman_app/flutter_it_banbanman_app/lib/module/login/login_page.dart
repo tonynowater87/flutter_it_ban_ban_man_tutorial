@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_it_banbanman_app/routes.dart';
+import 'package:flutter_it_banbanman_app/module/common/routes.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 
 // 登入頁面

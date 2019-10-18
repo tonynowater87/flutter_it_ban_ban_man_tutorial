@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_it_banbanman_app/routes.dart';
+import 'package:flutter_it_banbanman_app/module/common/routes.dart';
 
 class SettingPage extends StatelessWidget {
   @override
