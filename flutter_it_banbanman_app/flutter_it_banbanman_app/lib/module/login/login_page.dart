@@ -23,6 +23,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme _primaryTextTheme = Theme.of(context).primaryTextTheme;
+
     return ProgressHUD(
         child: Builder(
       builder: (context) => Scaffold(
@@ -35,8 +37,9 @@ class _LoginPageState extends State<LoginPage> {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            SizedBox(
-              height: 25,
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 12, 0, 0),
+              child: Image.asset("assets/images/login_sign.png"),
             ),
             Padding(
                 padding: EdgeInsets.all(20),
@@ -65,11 +68,14 @@ class _LoginPageState extends State<LoginPage> {
               height: 25,
             ),
             Container(
-              width: 200,
+              width: double.infinity,
               height: 50,
+              margin: EdgeInsets.fromLTRB(32, 0, 32, 0),
               color: Colors.black12,
               child: FlatButton(
-                child: Text("登入"),
+                child: Text("登入", style: _primaryTextTheme.button,),
+                textColor: Colors.white,
+                color: Colors.blueGrey,
                 onPressed: () {
                   final progress = ProgressHUD.of(context);
                   progress.showWithText("Loading...");
