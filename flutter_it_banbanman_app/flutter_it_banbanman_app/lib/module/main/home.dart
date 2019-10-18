@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hnpwa_client/hnpwa_client.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -23,7 +24,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-        onRefresh: () {}, //todo
+        onRefresh: () {
+          return Future.delayed(Duration(seconds: 1)).then((value) {
+            fetchNews();
+          });
+        },
         child: Column(
           children: <Widget>[
             Divider(
@@ -96,6 +101,9 @@ class _HomePageState extends State<HomePage> {
                   Text(" comments"),
                 ],
               ),
+              onTap: () {
+                _launchURL(filterTops[index].url);
+              },
             );
           }
         },
@@ -112,5 +120,13 @@ class _HomePageState extends State<HomePage> {
           }
         },
         itemCount: filterTops.length + 1);
+  }
+
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
