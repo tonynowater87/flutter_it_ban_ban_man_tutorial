@@ -14,11 +14,43 @@ class _IssuePageState extends State<IssuePage> {
   @override
   void initState() {
     super.initState();
+    print('[LifeCycle] initState');
     this.issueList = fetchIssues();
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print('[LifeCycle] didChangeDependencies');
+  }
+
+  @override
+  void didUpdateWidget(IssuePage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    print('[LifeCycle] didUpdateWidget');
+  }
+
+  @override
+  void reassemble() {
+    super.reassemble();
+    print('[LifeCycle] reassemble');
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+    print('[LifeCycle] deactivate');
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    print('[LifeCycle] dispose');
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print('[LifeCycle] build');
     return RefreshIndicator(
       onRefresh: () {
         return Future.delayed(Duration(seconds: 1), () {
