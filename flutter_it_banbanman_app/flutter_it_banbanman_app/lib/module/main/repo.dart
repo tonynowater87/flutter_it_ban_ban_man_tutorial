@@ -22,7 +22,9 @@ class _RepoPageState extends State<RepoPage> {
     return RefreshIndicator(
       onRefresh: () {
         return Future.delayed(Duration(seconds: 1), () {
-          fetchRepos();
+          setState(() {
+            remoteRepoList = fetchRepos();
+          });
         });
       },
       child: Container(
@@ -77,8 +79,8 @@ class _RepoPageState extends State<RepoPage> {
   }
 
   Future<List<Repository>> fetchRepos() async {
-    CurrentUser user = await gitHub.users.getCurrentUser();
-    print('[Tony] user:$user');
-    return gitHub.repositories.listUserRepositories(user.login).toList();
+    CurrentUser user = await gitHubClient.users.getCurrentUser();
+    print('[Tony] fetchRepos');
+    return gitHubClient.repositories.listUserRepositories(user.login).toList();
   }
 }

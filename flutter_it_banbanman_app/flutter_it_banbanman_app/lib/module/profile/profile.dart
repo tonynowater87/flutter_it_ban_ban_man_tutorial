@@ -15,10 +15,10 @@ class ProfilePage extends StatelessWidget {
 
   ProfilePage(
       {Key key,
-      @required this.imageUrl,
-      @required this.name,
+      this.imageUrl = "https://avatars3.githubusercontent.com/u/9815472?s=460&v=4",
+      this.name = "Tony Liao",
       this.bio,
-      this.location})
+      this.location = "Taichung, Taiwan"})
       : super(key: key);
 
   @override
@@ -45,9 +45,9 @@ class ProfilePage extends StatelessWidget {
                     children: <Widget>[
                       ProfileInfo(
                         avatarUrl:
-                            "https://avatars3.githubusercontent.com/u/9815472?s=460&v=4",
-                        name: "Tony Liao",
-                        location: "Taichung, Taiwan",
+                            this.imageUrl,
+                        name: this.name,
+                        location: this.location,
                       ),
                       SizedBox(
                         height: 48.0,
