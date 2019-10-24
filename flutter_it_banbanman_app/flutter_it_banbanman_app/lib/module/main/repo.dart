@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_it_banbanman_app/module/api/github_api.dart';
+import 'package:flutter_it_banbanman_app/module/common/tiles/repo_tile.dart';
 import 'package:github/server.dart';
 
 class RepoPage extends StatefulWidget {
@@ -38,14 +39,10 @@ class _RepoPageState extends State<RepoPage> {
                 return ListView.separated(
                     itemBuilder: (BuildContext context, int index) {
                       final data = snapshot.data[index];
-                      final description = data.description ?? "No description provided.";
-                      return ListTile(
-                        contentPadding: EdgeInsets.all(8),
-                        title: Text(data.fullName),
-                        trailing: Text(data.language),
-                        subtitle:
-                            Text("$description\n★ ${data.stargazersCount}"),
-                      );
+                      return RepoTile(title: data.fullName,
+                        subTitle: data.description,
+                        stars: data.stargazersCount,
+                        language: data.language,);
                     },
                     separatorBuilder: (BuildContext context, int index) {
                       return Divider(

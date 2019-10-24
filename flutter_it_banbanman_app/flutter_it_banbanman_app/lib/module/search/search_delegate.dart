@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_it_banbanman_app/module/api/github_api.dart';
+import 'package:flutter_it_banbanman_app/module/common/tiles/repo_tile.dart';
+import 'package:flutter_it_banbanman_app/module/common/tiles/user_tile.dart';
 import 'package:github/server.dart';
 
 enum SearchTypes { repos, users }
@@ -166,46 +168,5 @@ class _SearchResultPageState extends State<SearchResultPage> {
 
   Future<List<Repository>> searchRepos(String query) async {
     return gitHubClient.search.repositories(query, pages: 1).toList();
-  }
-}
-
-class RepoTile extends StatelessWidget {
-  final String title;
-  final String subTitle;
-  final String language;
-  final int stars;
-
-  RepoTile({Key key, this.title, this.subTitle, this.stars, this.language})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-
-    final description = subTitle ?? "No description provided";
-
-    return ListTile(
-      title: Text(title),
-      subtitle: Text("$description\n★ $stars"),
-      trailing: Text(language),
-      onTap: () {},
-    );
-  }
-}
-
-class UserTile extends StatelessWidget {
-  final String avatarUrl;
-  final String userName;
-
-  UserTile({Key key, this.avatarUrl, this.userName}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: CircleAvatar(
-        backgroundImage: NetworkImage(avatarUrl),
-      ),
-      title: Text(userName),
-      onTap: () {},
-    );
   }
 }
