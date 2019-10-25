@@ -59,9 +59,7 @@ class MySearchDelegate extends SearchDelegate {
     // 搜尋建議頁面
     switch (_searchTypes) {
       case SearchTypes.users:
-        {
-          return Center(child: Text("Search users that contain '$query' ..."));
-        }
+        return Center(child: Text("Search users that contain '$query' ..."));
       case SearchTypes.repos:
         return Center(child: Text("Search repos that contain '$query' ..."));
     }

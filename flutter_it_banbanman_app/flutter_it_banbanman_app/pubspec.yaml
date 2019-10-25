@@ -30,10 +30,18 @@ dependencies:
   url_launcher: ^5.2.2
   flutter_dotenv: ^2.0.3
   github: ^5.0.0
+  # JSON Parsing
+  json_annotation: ^3.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  # JSON Parsing
+  # run command below to auto-generate json models
+  # flutter pub run build_runner build
+  # see more info on https://flutter.dev/docs/development/data-and-backend/json#serializing-json-using-code-generation-libraries
+  build_runner: ^1.0.0
+  json_serializable: ^3.2.0
 
 # run the command below to update launch icon
 # flutter pub run flutter_launcher_icons:main -f <your config file name here>
