@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_it_banbanman_app/module/api/github_api.dart';
+import 'package:flutter_it_banbanman_app/module/service/models/developer.dart';
+import 'package:flutter_it_banbanman_app/module/service/models/github_rending_api.dart';
+import 'package:flutter_it_banbanman_app/module/service/models/project.dart';
 
 enum TrendingDateRange { Daily, Weekly, Monthly }
 
@@ -58,94 +62,109 @@ class _TrendingPageState extends State<TrendingPage> {
           ),
           body: TabBarView(
             children: <Widget>[
-              TrendingProject(),
-              TrendingDeveloper(),
+              TrendingProjectPage(),
+              TrendingDeveloperPage(),
             ],
           ),
         ));
   }
 }
 
-class TrendingProject extends StatelessWidget {
-  final trendingProject = [];
+class TrendingProjectPage extends StatefulWidget {
+  TrendingProjectPage({Key key}) : super(key: key) {}
 
-  TrendingProject({Key key}) : super(key: key) {
-    final circleAvatar = {
-      "username": "PavelDoGreat",
-      "href": "https://github.com/PavelDoGreat",
-      "avatar": "https://avatars2.githubusercontent.com/u/24439787"
-    };
+  @override
+  _TrendingProjectPageState createState() => _TrendingProjectPageState();
+}
 
-    final project1 = {
-      "title": "google / flutter",
-      "subTitle": "multi platform",
-      "trailing": "Dart",
-      "starts": 5566,
-      "builtBy": [
-        circleAvatar,
-      ]
-    };
+class _TrendingProjectPageState extends State<TrendingProjectPage> {
+  Future<List<Project>> projects;
 
-    final project2 = {
-      "title": "google / flutter",
-      "subTitle": "multi platform",
-      "trailing": "Dart",
-      "starts": 5566,
-      "builtBy": [
-        circleAvatar,
-        circleAvatar,
-        circleAvatar,
-        circleAvatar,
-        circleAvatar,
-      ]
-    };
-
-    trendingProject.add(project1);
-    trendingProject.add(project2);
+  @override
+  void initState() {
+    super.initState();
+    projects = fetchProjects();
   }
 
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
         onRefresh: () {
-          return Future.delayed(Duration(seconds: 2), () {});
+          return Future.delayed(Duration(seconds: 2), () {
+            setState(() {
+              projects = fetchProjects();
+            });
+          });
         },
-        child: ListView.separated(
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(trendingProject[index]["title"]),
-                subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 4.0),
-                      Text(trendingProject[index]["subTitle"]),
-                      SizedBox(height: 4.0),
-                      Row(
-                        children: <Widget>[
-                          Text("★ ${trendingProject[index]['starts']}"),
-                          // ignore: sdk_version_ui_as_code
-                          ...buildList(trendingProject[index]["builtBy"])
-                        ],
-                      )
-                    ]),
-                trailing: Text(trendingProject[index]["trailing"]),
-                onTap: () {},
+        child: FutureBuilder(
+            future: projects,
+            builder:
+                (BuildContext context, AsyncSnapshot<List<Project>> snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.done:
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text("has error:${snapshot.error}"),
+                    );
+                  }
+                  if (!snapshot.hasData) {
+                    return Center(child: Text("No Data"));
+                  }
+
+                  return ListView.separated(
+                      itemBuilder: (context, index) {
+                        final trendingProject = snapshot.data;
+                        return ListTile(
+                          title: Text(trendingProject[index].fullName),
+                          subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 4.0),
+                                Text(trendingProject[index].description),
+                                SizedBox(height: 4.0),
+                                Row(
+                                  children: <Widget>[
+                                    Text("★ ${trendingProject[index].stars}"),
+                                    // ignore: sdk_version_ui_as_code
+                                    ...buildList(trendingProject[index].builtBy)
+                                  ],
+                                )
+                              ]),
+                          trailing: Text(trendingProject[index].language ?? ""),
+                          //todo colors
+                          onTap: () {},
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return Divider(height: 0);
+                      },
+                      itemCount: snapshot.data.length);
+                  break;
+                case ConnectionState.none:
+                  break;
+                case ConnectionState.waiting:
+                  break;
+                case ConnectionState.active:
+                  break;
+              }
+
+              return Center(
+                child: CircularProgressIndicator(),
               );
-            },
-            separatorBuilder: (context, index) {
-              return Divider(height: 0);
-            },
-            itemCount: trendingProject.length));
+            }));
   }
 
-  List<Padding> buildList(List buildByList) {
-    print('[Tony] $buildByList');
+  Future<List<Project>> fetchProjects() async {
+    return GitHubTrendingApiClient().listProjects();
+  }
+
+  List<Padding> buildList(List<BuiltBy> buildByList) {
     List circleAvatars = buildByList.map((buildBy) {
       return Padding(
         padding: EdgeInsets.all(4.0),
         child: CircleAvatar(
           radius: 12.0,
-          backgroundImage: NetworkImage(buildBy["avatar"]),
+          backgroundImage: NetworkImage(buildBy.avatar),
         ),
       );
     }).toList(growable: false);
@@ -158,76 +177,85 @@ class TrendingProject extends StatelessWidget {
   }
 }
 
-class TrendingDeveloper extends StatelessWidget {
-  final List developers = [
-    {
-      "username": "lirantal",
-      "name": "Liran Tal",
-      "type": "user",
-      "url": "https://github.com/lirantal",
-      "avatar": "https://avatars2.githubusercontent.com/u/316371",
-      "repo": {
-        "name": "dockly",
-        "description":
-            "Immersive terminal interface for managing docker containers and services",
-        "url": "https://github.com/lirantal/dockly"
-      }
-    },
-    {
-      "username": "wojtekmaj",
-      "name": "Wojciech Maj",
-      "type": "user",
-      "url": "https://github.com/wojtekmaj",
-      "avatar": "https://avatars0.githubusercontent.com/u/5426427",
-      "repo": {
-        "name": "react-pdf",
-        "description":
-            "Display PDFs in your React app as easily as if they were images.",
-        "url": "https://github.com/wojtekmaj/react-pdf"
-      }
-    },
-    {
-      "username": "mrdoob",
-      "name": "Mr.doob",
-      "type": "user",
-      "url": "https://github.com/mrdoob",
-      "avatar": "https://avatars2.githubusercontent.com/u/97088",
-      "repo": {
-        "name": "three.js",
-        "description": "JavaScript 3D library.",
-        "url": "https://github.com/mrdoob/three.js"
-      }
-    }
-  ];
+class TrendingDeveloperPage extends StatefulWidget {
+  TrendingDeveloperPage({Key key}) : super(key: key);
 
-  TrendingDeveloper({Key key}) : super(key: key);
+  @override
+  _TrendingDeveloperPageState createState() => _TrendingDeveloperPageState();
+}
+
+class _TrendingDeveloperPageState extends State<TrendingDeveloperPage> {
+  Future<List<Developer>> developers;
+
+  @override
+  void initState() {
+    super.initState();
+    developers = fetchDevelopers();
+  }
 
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () {
-        return Future.delayed(Duration(seconds: 2), () {});
+        return Future.delayed(Duration(seconds: 2), () {
+          setState(() {
+            developers = fetchDevelopers();
+          });
+        });
       },
-      child: ListView.separated(
-          itemBuilder: (context, index) {
-            return ListTile(
-              contentPadding: EdgeInsets.fromLTRB(8, 4, 8, 4),
-              leading: CircleAvatar(
-                backgroundImage: NetworkImage(developers[index]["avatar"]),
-              ),
-              title: Row(children: [
-                Text(developers[index]["name"]),
-                SizedBox(width: 16),
-                Text(developers[index]['username'])
-              ]),
-              subtitle: Text(developers[index]["repo"]["description"]),
-              onTap: () {},
-            );
-          },
-          separatorBuilder: (context, index) {
-            return Divider(height: 0);
-          },
-          itemCount: developers.length),
+      child: FutureBuilder(
+        future: developers,
+        builder:
+            (BuildContext context, AsyncSnapshot<List<Developer>> snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.done:
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text("has error:${snapshot.error}"),
+                );
+              }
+              if (!snapshot.hasData) {
+                return Center(child: Text("No Data"));
+              }
+
+              return ListView.separated(
+                  itemBuilder: (context, index) {
+                    final data = snapshot.data;
+
+                    return ListTile(
+                      contentPadding: EdgeInsets.fromLTRB(8, 4, 8, 4),
+                      leading: CircleAvatar(
+                        backgroundImage: NetworkImage(data[index].avatar),
+                      ),
+                      title: Row(children: [
+                        Text(data[index].name),
+                        SizedBox(width: 16),
+                        Text(data[index].username)
+                      ]),
+                      subtitle: Text(data[index].repo.description),
+                      onTap: () {},
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return Divider(height: 0);
+                  },
+                  itemCount: snapshot.data.length);
+            case ConnectionState.none:
+              break;
+            case ConnectionState.waiting:
+              break;
+            case ConnectionState.active:
+              break;
+          }
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      ),
     );
+  }
+
+  Future<List<Developer>> fetchDevelopers() async {
+    return await GitHubTrendingApiClient().listDeveloper();
   }
 }
