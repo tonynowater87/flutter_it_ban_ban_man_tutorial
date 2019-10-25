@@ -72,7 +72,7 @@ class ProfilePage extends StatelessWidget {
               children: <Widget>[
                 RepoPage(),
                 StartsPage(),
-                FollowPage(),
+                FollowerPage(),
                 FollowingPage(),
               ],
             ),
