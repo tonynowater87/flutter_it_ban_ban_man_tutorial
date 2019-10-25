@@ -1,7 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class TrendingPage extends StatelessWidget {
+enum TrendingDateRange { Daily, Weekly, Monthly }
+
+class TrendingPage extends StatefulWidget {
+  @override
+  _TrendingPageState createState() => _TrendingPageState();
+}
+
+class _TrendingPageState extends State<TrendingPage> {
+  TrendingDateRange _dateRange = TrendingDateRange.Daily;
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -18,9 +27,31 @@ class TrendingPage extends StatelessWidget {
               PopupMenuButton(
                 itemBuilder: (BuildContext context) {
                   return [
-                    PopupMenuItem(child: Text("Language: All")),
-                    PopupMenuItem(child: Text("Date range: daily")),
+                    PopupMenuItem(
+                      child: Text("Date range"),
+                    ),
+                    CheckedPopupMenuItem(
+                      child: Text("daily"),
+                      value: TrendingDateRange.Daily,
+                      checked: _dateRange == TrendingDateRange.Daily,
+                    ),
+                    CheckedPopupMenuItem(
+                      child: Text("weekly"),
+                      value: TrendingDateRange.Weekly,
+                      checked: _dateRange == TrendingDateRange.Weekly,
+                    ),
+                    CheckedPopupMenuItem(
+                      child: Text("monthly"),
+                      value: TrendingDateRange.Monthly,
+                      checked: _dateRange == TrendingDateRange.Monthly,
+                    )
                   ];
+                },
+                onSelected: (value) {
+                  setState(() {
+                    print('[Tony] select:$value');
+                    _dateRange = value;
+                  });
                 },
               )
             ],
