@@ -37,6 +37,7 @@ class _RepoPageState extends State<RepoPage> {
               if (!snapshot.hasError) {
                 print('[Tony] ConnectionState.done');
                 return ListView.separated(
+                    padding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
                     itemBuilder: (BuildContext context, int index) {
                       final data = snapshot.data[index];
                       return RepoTile(title: data.fullName,
