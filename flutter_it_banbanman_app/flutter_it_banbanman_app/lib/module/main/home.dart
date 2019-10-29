@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_it_banbanman_app/module/common/routes.dart';
+import 'package:flutter_it_banbanman_app/module/common/tiles/project_tile.dart';
+import 'package:flutter_it_banbanman_app/module/service/models/github_rending_api.dart';
+import 'package:flutter_it_banbanman_app/module/service/models/project.dart';
 import 'package:hnpwa_client/hnpwa_client.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -13,6 +17,7 @@ class _HomePageState extends State<HomePage> {
 
   List<FeedItem> tops;
   List<FeedItem> newsest;
+  List<Project> projects;
 
   @override
   void initState() {
@@ -23,103 +28,109 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-        onRefresh: () {
-          return Future.delayed(Duration(seconds: 1)).then((value) {
-            fetchNews();
-          });
-        },
-        child: Column(
-          children: <Widget>[
-            Divider(
-              height: 5,
-              thickness: 5.0,
-            ),
-            Flexible(
-              flex: 1,
-              fit: FlexFit.tight,
-              child: buildTop(tops),
-            ),
-            Divider(
-              height: 5,
-              thickness: 5.0,
-            ),
-            Flexible(
-              flex: 1,
-              fit: FlexFit.tight,
-              child: buildTop(newsest),
-            )
-          ],
-        ));
+    return Scrollbar(
+      child: RefreshIndicator(
+          onRefresh: () {
+            return Future.delayed(Duration(seconds: 1)).then((value) {
+              fetchNews();
+            });
+          },
+          child: ListView(
+            children: <Widget>[
+              Divider(
+                height: 0,
+                thickness: 2,
+              ),
+              ListTile(
+                title: Text("Hackernews Top"),
+                dense: true,
+                trailing: Icon(Icons.chevron_right),
+                onTap: () {},
+              ),
+              Divider(
+                height: 0,
+                thickness: 2,
+              ),
+              // ignore: sdk_version_ui_as_code
+              ...buildTop(context, tops),
+              Divider(
+                height: 0,
+                thickness: 2,
+              ),
+              ListTile(
+                title: Text("Hackernews New"),
+                dense: true,
+                trailing: Icon(Icons.chevron_right),
+                onTap: () {},
+              ),
+              Divider(
+                height: 0,
+                thickness: 2,
+              ),
+              // ignore: sdk_version_ui_as_code
+              ...buildTop(context, newsest),
+              Divider(
+                height: 0,
+                thickness: 2,
+              ),
+              ListTile(
+                title: Text("Github Trendings..."),
+                dense: true,
+                trailing: Icon(Icons.chevron_right),
+                onTap: () {
+                  Navigator.pushNamed(context, RoutesTable.trending);
+                },
+              ),
+              Divider(
+                height: 0,
+                thickness: 2,
+              ),
+              // ignore: sdk_version_ui_as_code
+              ...buildTrendingRepos(context)
+            ],
+          )),
+    );
   }
 
   void fetchNews() async {
     Feed top = await hnpwaClient.news();
-    Feed newsest = await hnpwaClient.newest();
-
     print('[Tony] fetchNews:$top');
-    print('[Tony] fetchNews:$newsest');
+
+    Feed newsest = await hnpwaClient.newest();
+    print('[Tony] fetchNewest:$newsest');
+
+    final project = await GitHubTrendingApiClient().listProjects();
+
     setState(() {
       this.tops = top.items;
       this.newsest = newsest.items;
+      this.projects = project;
     });
   }
 
-  Widget buildTop(List<FeedItem> items) {
+  buildTop(BuildContext context, List<FeedItem> items) {
     if (items == null) {
-      return Wrap(
-        children: <Widget>[CircularProgressIndicator()],
-      );
+      return [
+        Padding(
+          padding: EdgeInsets.all(24),
+          child: Center(child: CircularProgressIndicator(),),
+        )
+      ];
+    } else {
+      return ListTile.divideTiles(
+              context: context,
+              tiles: items.sublist(0, 4).map((item) {
+                return ListTile(
+                  title: Text(item.title),
+                  subtitle:
+                      Text("by ${item.user} | ${item.commentsCount} comments"),
+                  onTap: () {
+                    _launchURL(item.url);
+                  },
+                );
+              }).toList())
+          .toList();
     }
-
-    List<FeedItem> filterTops = items.sublist(0, 7);
-    return ListView.separated(
-        itemBuilder: (context, indexParam) {
-          if (indexParam == 0) {
-            String title;
-            if (items == tops) {
-              title = "Hacker Top News";
-            } else if (items == newsest) {
-              title = "Hacker Lastest News";
-            }
-
-            return ListTile(
-              title: Text(title),
-              trailing: Icon(Icons.keyboard_arrow_right),
-            );
-          } else {
-            var index = --indexParam;
-
-            return ListTile(
-              title: Text(filterTops[index].title),
-              subtitle: Row(
-                children: <Widget>[
-                  Text(" by "),
-                  Text(filterTops[index].user),
-                  Text(" | "),
-                  Text(filterTops[index].commentsCount.toString()),
-                  Text(" comments"),
-                ],
-              ),
-              onTap: () {
-                _launchURL(filterTops[index].url);
-              },
-            );
-          }
-        },
-        separatorBuilder: (context, index) {
-          if (index == 0) {
-            return Divider(
-              height: 0,
-              thickness: 5.0,
-            );
-          } else {
-            return Divider(
-              height: 0,
-            );
-          }
-        },
-        itemCount: filterTops.length + 1);
   }
 
   _launchURL(String url) async {
@@ -127,6 +138,24 @@ class _HomePageState extends State<HomePage> {
       await launch(url);
     } else {
       throw 'Could not launch $url';
+    }
+  }
+
+  buildTrendingRepos(BuildContext context) {
+    if (projects == null) {
+      return [
+        Padding(
+          padding: EdgeInsets.all(24),
+          child: Center(child: CircularProgressIndicator(),),
+        )
+      ];
+    } else {
+      return ListTile.divideTiles(
+              context: context,
+              tiles: projects.sublist(0, 4).map((project) {
+                return ProjectTile(project: project);
+              }).toList())
+          .toList();
     }
   }
 }
