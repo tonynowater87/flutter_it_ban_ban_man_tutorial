@@ -7,9 +7,9 @@ import 'package:flutter_it_banbanman_app/module/trending/trending.dart';
 
 class TrendingProjectPage extends StatefulWidget {
 
-  TrendingDateRange dateRange;
+  final TrendingDateRange dateRange;
 
-  TrendingProjectPage({Key key, @required this.dateRange}) : super(key: key);
+  const TrendingProjectPage({Key key, @required this.dateRange}) : super(key: key);
 
   @override
   _TrendingProjectPageState createState() => _TrendingProjectPageState();
@@ -19,13 +19,9 @@ class _TrendingProjectPageState extends State<TrendingProjectPage> {
   Future<List<Project>> projects;
 
   @override
-  void initState() {
-    super.initState();
-    projects = fetchProjects();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    print('[Tony] build TrendingProjectPage');
+    projects = fetchProjects();
     return RefreshIndicator(
         onRefresh: () async {
           setState(() {

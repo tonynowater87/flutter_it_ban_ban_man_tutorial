@@ -5,7 +5,6 @@ import 'package:flutter_it_banbanman_app/module/trending/trending_project.dart';
 
 enum TrendingDateRange { Daily, Weekly, Monthly }
 
-//todo don't know why page not being refreshing after select menu item
 class TrendingPage extends StatefulWidget {
   @override
   _TrendingPageState createState() => _TrendingPageState();

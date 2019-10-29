@@ -18,15 +18,9 @@ class _TrendingDeveloperPageState extends State<TrendingDeveloperPage> {
   Future<List<Developer>> developers;
 
   @override
-  void initState() {
-    super.initState();
-    setState(() {
-      developers = fetchDevelopers();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    print('[Tony] build TrendingDeveloperPage');
+    developers = fetchDevelopers();
     return RefreshIndicator(
       onRefresh: () async {
         setState(() {
