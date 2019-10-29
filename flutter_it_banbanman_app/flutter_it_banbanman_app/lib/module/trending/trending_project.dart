@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_it_banbanman_app/module/common/tiles/project_tile.dart';
 import 'package:flutter_it_banbanman_app/module/service/models/github_rending_api.dart';
 import 'package:flutter_it_banbanman_app/module/service/models/project.dart';
 
 class TrendingProjectPage extends StatefulWidget {
-  TrendingProjectPage({Key key}) : super(key: key) {}
+  TrendingProjectPage({Key key}) : super(key: key);
 
   @override
   _TrendingProjectPageState createState() => _TrendingProjectPageState();
@@ -47,26 +48,7 @@ class _TrendingProjectPageState extends State<TrendingProjectPage> {
                   return ListView.separated(
                       itemBuilder: (context, index) {
                         final trendingProject = snapshot.data;
-                        return ListTile(
-                          title: Text(trendingProject[index].fullName),
-                          subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(height: 4.0),
-                                Text(trendingProject[index].description),
-                                SizedBox(height: 4.0),
-                                Row(
-                                  children: <Widget>[
-                                    Text("★ ${trendingProject[index].stars}"),
-                                    // ignore: sdk_version_ui_as_code
-                                    ...buildList(trendingProject[index].builtBy)
-                                  ],
-                                )
-                              ]),
-                          trailing: Text(trendingProject[index].language ?? ""),
-                          //todo colors
-                          onTap: () {},
-                        );
+                        return ProjectTile(project: trendingProject[index],);
                       },
                       separatorBuilder: (context, index) {
                         return Divider(height: 0);
