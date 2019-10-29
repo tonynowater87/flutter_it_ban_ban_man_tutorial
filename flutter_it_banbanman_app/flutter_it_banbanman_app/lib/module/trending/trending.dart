@@ -5,6 +5,7 @@ import 'package:flutter_it_banbanman_app/module/trending/trending_project.dart';
 
 enum TrendingDateRange { Daily, Weekly, Monthly }
 
+//todo don't know why page not being refreshing after select menu item
 class TrendingPage extends StatefulWidget {
   @override
   _TrendingPageState createState() => _TrendingPageState();
@@ -29,27 +30,33 @@ class _TrendingPageState extends State<TrendingPage> {
               PopupMenuButton(
                 itemBuilder: (BuildContext context) {
                   return [
-                    PopupMenuItem(
-                      child: Text("Date range"),
+                    PopupMenuItem<TrendingDateRange>(
+                      child: Row(
+                        children: <Widget>[
+                          Icon(Icons.date_range),
+                          SizedBox(width: 8,),
+                          Text("Date range")
+                        ],
+                      ),
                     ),
-                    CheckedPopupMenuItem(
+                    CheckedPopupMenuItem<TrendingDateRange>(
                       child: Text("daily"),
                       value: TrendingDateRange.Daily,
                       checked: _dateRange == TrendingDateRange.Daily,
                     ),
-                    CheckedPopupMenuItem(
+                    CheckedPopupMenuItem<TrendingDateRange>(
                       child: Text("weekly"),
                       value: TrendingDateRange.Weekly,
                       checked: _dateRange == TrendingDateRange.Weekly,
                     ),
-                    CheckedPopupMenuItem(
+                    CheckedPopupMenuItem<TrendingDateRange>(
                       child: Text("monthly"),
                       value: TrendingDateRange.Monthly,
                       checked: _dateRange == TrendingDateRange.Monthly,
                     )
                   ];
                 },
-                onSelected: (value) {
+                onSelected: (TrendingDateRange value) {
                   setState(() {
                     print('[Tony] select:$value');
                     _dateRange = value;
@@ -60,8 +67,8 @@ class _TrendingPageState extends State<TrendingPage> {
           ),
           body: TabBarView(
             children: <Widget>[
-              TrendingProjectPage(),
-              TrendingDeveloperPage(),
+              TrendingProjectPage(dateRange:_dateRange),
+              TrendingDeveloperPage(dateRange: _dateRange,),
             ],
           ),
         ));

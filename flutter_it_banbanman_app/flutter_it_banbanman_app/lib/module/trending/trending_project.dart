@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_it_banbanman_app/module/common/tiles/project_tile.dart';
 import 'package:flutter_it_banbanman_app/module/service/models/github_rending_api.dart';
 import 'package:flutter_it_banbanman_app/module/service/models/project.dart';
+import 'package:flutter_it_banbanman_app/module/trending/trending.dart';
 
 class TrendingProjectPage extends StatefulWidget {
-  TrendingProjectPage({Key key}) : super(key: key);
+
+  TrendingDateRange dateRange;
+
+  TrendingProjectPage({Key key, @required this.dateRange}) : super(key: key);
 
   @override
   _TrendingProjectPageState createState() => _TrendingProjectPageState();
@@ -23,11 +27,9 @@ class _TrendingProjectPageState extends State<TrendingProjectPage> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-        onRefresh: () {
-          return Future.delayed(Duration(seconds: 2), () {
-            setState(() {
-              projects = fetchProjects();
-            });
+        onRefresh: () async {
+          setState(() {
+            projects = fetchProjects();
           });
         },
         child: FutureBuilder(
@@ -70,7 +72,9 @@ class _TrendingProjectPageState extends State<TrendingProjectPage> {
   }
 
   Future<List<Project>> fetchProjects() async {
-    return GitHubTrendingApiClient().listProjects();
+    var since = widget.dateRange.toString().split('.')[1];
+    print('[Tony] fetchProjects:$since');
+    return GitHubTrendingApiClient().listProjects(since: since);
   }
 
   List<Padding> buildList(List<BuiltBy> buildByList) {

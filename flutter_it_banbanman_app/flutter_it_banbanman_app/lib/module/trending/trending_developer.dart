@@ -2,9 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_it_banbanman_app/module/service/models/developer.dart';
 import 'package:flutter_it_banbanman_app/module/service/models/github_rending_api.dart';
+import 'package:flutter_it_banbanman_app/module/trending/trending.dart';
 
 class TrendingDeveloperPage extends StatefulWidget {
-  TrendingDeveloperPage({Key key}) : super(key: key);
+
+  final TrendingDateRange dateRange;
+
+  const TrendingDeveloperPage({Key key, @required this.dateRange}) : super(key: key);
 
   @override
   _TrendingDeveloperPageState createState() => _TrendingDeveloperPageState();
@@ -16,17 +20,17 @@ class _TrendingDeveloperPageState extends State<TrendingDeveloperPage> {
   @override
   void initState() {
     super.initState();
-    developers = fetchDevelopers();
+    setState(() {
+      developers = fetchDevelopers();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () {
-        return Future.delayed(Duration(seconds: 2), () {
-          setState(() {
-            developers = fetchDevelopers();
-          });
+      onRefresh: () async {
+        setState(() {
+          developers = fetchDevelopers();
         });
       },
       child: FutureBuilder(
@@ -82,6 +86,8 @@ class _TrendingDeveloperPageState extends State<TrendingDeveloperPage> {
   }
 
   Future<List<Developer>> fetchDevelopers() async {
-    return await GitHubTrendingApiClient().listDeveloper();
+    var since = widget.dateRange.toString().split('.')[1];
+    print('[Tony] fetchDevelopers:$since');
+    return await GitHubTrendingApiClient().listDeveloper(since: since);
   }
 }
