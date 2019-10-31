@@ -1,18 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_it_banbanman_app/module/api/github_api.dart';
-import 'package:flutter_it_banbanman_app/module/common/routes.dart';
-import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 
 class LoginFormWidget extends StatefulWidget {
+
+  final Function(_LoginFormWidgetState state) onLogin;
+
+  LoginFormWidget({Key key, this.onLogin}) : super(key: key);
+
   @override
   _LoginFormWidgetState createState() => _LoginFormWidgetState();
 }
 
 class _LoginFormWidgetState extends State<LoginFormWidget> {
   FocusNode _passwordFocusNode = FocusNode();
-  final _userNameController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final userNameController = TextEditingController();
+  final passwordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+
   bool _isHidden = true;
 
   void _toggleVisibility() {
@@ -24,6 +28,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: formKey,
       child: Padding(
         padding: EdgeInsets.all(8),
         child: Column(
@@ -31,7 +36,14 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
           children: <Widget>[
             Image.asset("assets/images/login_sign.png"),
             TextFormField(
-              controller: _userNameController,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return "Please enter your user name";
+                } else {
+                  return null;
+                }
+              },
+              controller: userNameController,
               decoration: InputDecoration(
                   labelText: "Name",
                   prefixIcon: Icon(Icons.people),
@@ -44,8 +56,15 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
               height: 25,
             ),
             TextFormField(
+              validator: (value) {
+                if (value.isEmpty) {
+                  return "Please enter your password";
+                } else {
+                  return null;
+                }
+              },
               focusNode: _passwordFocusNode,
-              controller: _passwordController,
+              controller: passwordController,
               obscureText: _isHidden,
               decoration: InputDecoration(
                 labelText: "Password",
@@ -58,7 +77,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                 hintText: "Your Github account password ...",
               ),
               onFieldSubmitted: (value) {
-                login(context);
+                widget.onLogin(this);
               },
             ),
             SizedBox(
@@ -76,7 +95,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                 textColor: Colors.white,
                 color: Colors.blueGrey,
                 onPressed: () {
-                  login(context);
+                  widget.onLogin(this);
                 },
               ),
             ),
@@ -84,28 +103,5 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
         ),
       ),
     );
-  }
-
-  Future login(BuildContext context) async {
-    final progress = ProgressHUD.of(context);
-    progress.showWithText("Loading...");
-    FocusScope.of(context).unfocus(); // dismiss the keyboard
-    Future.delayed(Duration(microseconds: 500), () async {
-      try {
-        gitHubClient = getGithubClient(
-          useName: _userNameController.text,
-          password: _passwordController.text,
-          /**token: DotEnv().env["GITHUB_TOKEN"]*/
-        );
-
-        await gitHubClient.users.getCurrentUser();
-
-        Navigator.pushReplacementNamed(context, RoutesTable.home);
-      } catch (e) {
-        print('[Tony] login error:$e');
-      } finally {
-        progress.dismiss();
-      }
-    });
   }
 }
