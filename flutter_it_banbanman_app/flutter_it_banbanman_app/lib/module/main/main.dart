@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_it_banbanman_app/model/account.dart';
 import 'package:flutter_it_banbanman_app/module/about/about.dart';
 import 'package:flutter_it_banbanman_app/module/common/routes.dart';
 import 'package:flutter_it_banbanman_app/module/main/home.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_it_banbanman_app/module/profile/profile.dart';
 import 'package:flutter_it_banbanman_app/module/setting/setting.dart';
 import 'package:flutter_it_banbanman_app/module/setting/setting_language.dart';
 import 'package:flutter_it_banbanman_app/module/trending/trending.dart';
+import 'package:provider/provider.dart';
 
 import '../login/login_page.dart';
 import '../search/search_delegate.dart';
@@ -18,7 +20,14 @@ Future main() async {
   await DotEnv().load('.env');
   String token = DotEnv().env["GITHUB_TOKEN"];
   print('[Tony] Token:$token');
-  runApp(GitmeRebornApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+        builder: (BuildContext context) => AccountModel(),
+      )
+    ],
+    child: GitmeRebornApp(),
+  ));
 }
 
 class GitmeRebornApp extends StatelessWidget {
@@ -178,9 +187,10 @@ class DrawerTitle extends StatelessWidget {
       title: Row(
         children: <Widget>[Icon(iconData), SizedBox(width: 24.0), Text(text)],
       ),
-      onTap: onPressed ?? () {
-        print('[Tony] "not set onPressed"');
-      },
+      onTap: onPressed ??
+          () {
+            print('[Tony] "not set onPressed"');
+          },
     );
   }
 }

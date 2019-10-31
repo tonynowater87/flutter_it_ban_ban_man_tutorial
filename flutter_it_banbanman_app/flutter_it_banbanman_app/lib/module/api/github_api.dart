@@ -2,7 +2,7 @@ import 'package:github/server.dart';
 
 GitHub gitHubClient;
 
-GitHub getGithubClient({String useName, String password, String token}) {
+GitHub getGithubClient({String useName = "", String password = "", String token}) {
     if (useName.isNotEmpty && password.isNotEmpty) {
         return GitHub(auth: Authentication.basic(useName, password));
     } else if (token != null) {

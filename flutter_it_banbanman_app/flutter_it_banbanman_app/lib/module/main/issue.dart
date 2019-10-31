@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_it_banbanman_app/module/api/github_api.dart';
+import 'package:flutter_it_banbanman_app/model/account.dart';
 import 'package:github/server.dart';
+import 'package:provider/provider.dart';
 
 class IssuePage extends StatefulWidget {
   @override
@@ -9,103 +10,48 @@ class IssuePage extends StatefulWidget {
 }
 
 class _IssuePageState extends State<IssuePage> {
-  Future<List<Issue>> issueList;
-
-  @override
-  void initState() {
-    super.initState();
-    print('[LifeCycle] initState');
-    this.issueList = fetchIssues();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    print('[LifeCycle] didChangeDependencies');
-  }
-
-  @override
-  void didUpdateWidget(IssuePage oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    print('[LifeCycle] didUpdateWidget');
-  }
-
-  @override
-  void reassemble() {
-    super.reassemble();
-    print('[LifeCycle] reassemble');
-  }
-
-  @override
-  void deactivate() {
-    super.deactivate();
-    print('[LifeCycle] deactivate');
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    print('[LifeCycle] dispose');
-  }
-
   @override
   Widget build(BuildContext context) {
-    print('[LifeCycle] build');
-    return RefreshIndicator(
-      onRefresh: () {
-        return Future.delayed(Duration(seconds: 1), () {
-          setState(() {
-            issueList = fetchIssues();
-          });
-        });
-      },
-      child: FutureBuilder(
-        future: issueList,
-        builder: (BuildContext context, AsyncSnapshot<List<Issue>> snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              if (snapshot.hasError) {
-                return Center(
-                  child: Text("has error"),
-                );
-              }
-              if (!snapshot.hasData || snapshot.data.isEmpty) {
-                return Center(
-                  child: Text("no data"),
-                );
-              }
-              return ListView.separated(
-                  itemBuilder: (BuildContext context, int index) {
-                    var data = snapshot.data[index];
-                    return ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage: NetworkImage(data.url),
-                      ),
-                      title: Text(data.title),
-                      subtitle: Text(data.createdAt.toIso8601String()),
-                      trailing: Icon(Icons.info),
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return Divider(
-                      height: 0,
-                    );
-                  },
-                  itemCount: snapshot.data.length);
-            case ConnectionState.none:
-            case ConnectionState.waiting:
-            case ConnectionState.active:
-          }
+    return Consumer<AccountModel>(
+      builder: (context, account, widget) {
+        if (account.issues == null) {
+          account.fetchIssues();
           return Center(
             child: CircularProgressIndicator(),
           );
-        },
-      ),
+        } else {
+          return RefreshIndicator(
+            onRefresh: () async {
+              account.refreshIssues();
+            },
+            child: _buildIssueListView(account.issues),
+          );
+        }
+      },
     );
   }
 
-  Future<List<Issue>> fetchIssues() async {
-    print('[Tony] fetchIssues');
-    return gitHubClient.issues.listAll(state: "all").toList();
+  _buildIssueListView(List<Issue> issues) {
+    if (issues.isEmpty) {
+      return Center(child: Text("No Issues."),);
+    } else
+      return ListView.separated(
+          itemBuilder: (BuildContext context, int index) {
+            var data = issues[index];
+            return ListTile(
+              leading: CircleAvatar(
+                backgroundImage: NetworkImage(data.url),
+              ),
+              title: Text(data.title),
+              subtitle: Text(data.createdAt.toIso8601String()),
+              trailing: Icon(Icons.info),
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) {
+            return Divider(
+              height: 0,
+            );
+          },
+          itemCount: issues.length);
   }
 }

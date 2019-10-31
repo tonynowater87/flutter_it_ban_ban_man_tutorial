@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_it_banbanman_app/model/account.dart';
 import 'package:flutter_it_banbanman_app/module/api/github_api.dart';
 import 'package:flutter_it_banbanman_app/module/common/routes.dart';
 import 'package:flutter_it_banbanman_app/module/login/login_form.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:github/server.dart';
+import 'package:provider/provider.dart';
 
 // 登入頁面
 class LoginPage extends StatefulWidget {
@@ -15,8 +18,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
   @override
   Widget build(BuildContext context) {
+    final account = Provider.of<AccountModel>(context);
+
     return ProgressHUD(
         child: Builder(
             builder: (context) => Scaffold(
@@ -37,10 +43,12 @@ class _LoginPageState extends State<LoginPage> {
                           gitHubClient = getGithubClient(
                             useName: state.userNameController.text,
                             password: state.passwordController.text,
-                            /**token: DotEnv().env["GITHUB_TOKEN"]*/
+                            /*token: DotEnv().env["GITHUB_TOKEN"]*/
                           );
 
-                          await gitHubClient.users.getCurrentUser();
+                          CurrentUser user = await gitHubClient.users.getCurrentUser();
+
+                          account.updateUser(user);
 
                           Fluttertoast.showToast(msg: "Login Success!");
 
