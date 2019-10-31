@@ -10,6 +10,7 @@ class LoginFormWidget extends StatefulWidget {
 }
 
 class _LoginFormWidgetState extends State<LoginFormWidget> {
+  FocusNode _passwordFocusNode = FocusNode();
   final _userNameController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isHidden = true;
@@ -35,23 +36,31 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                   labelText: "Name",
                   prefixIcon: Icon(Icons.people),
                   hintText: "Your Github account user name."),
+              onFieldSubmitted: (value) {
+                FocusScope.of(context).requestFocus(_passwordFocusNode);
+              },
             ),
             SizedBox(
               height: 25,
             ),
             TextFormField(
-                controller: _passwordController,
-                obscureText: _isHidden,
-                decoration: InputDecoration(
-                  labelText: "Password",
-                  prefixIcon: Icon(Icons.lock),
-                  suffixIcon: IconButton(
-                      icon: _isHidden
-                          ? Icon(Icons.visibility_off)
-                          : Icon(Icons.visibility),
-                      onPressed: _toggleVisibility),
-                  hintText: "Your Github account password ...",
-                )),
+              focusNode: _passwordFocusNode,
+              controller: _passwordController,
+              obscureText: _isHidden,
+              decoration: InputDecoration(
+                labelText: "Password",
+                prefixIcon: Icon(Icons.lock),
+                suffixIcon: IconButton(
+                    icon: _isHidden
+                        ? Icon(Icons.visibility_off)
+                        : Icon(Icons.visibility),
+                    onPressed: _toggleVisibility),
+                hintText: "Your Github account password ...",
+              ),
+              onFieldSubmitted: (value) {
+                login(context);
+              },
+            ),
             SizedBox(
               height: 25,
             ),
@@ -67,26 +76,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                 textColor: Colors.white,
                 color: Colors.blueGrey,
                 onPressed: () {
-                  final progress = ProgressHUD.of(context);
-                  progress.showWithText("Loading...");
-                  FocusScope.of(context).unfocus(); // dismiss the keyboard
-                  Future.delayed(Duration(microseconds: 500), () async {
-                    try {
-                      gitHubClient = getGithubClient(
-                        useName: _userNameController.text,
-                        password: _passwordController.text,
-                        /**token: DotEnv().env["GITHUB_TOKEN"]*/
-                      );
-
-                      await gitHubClient.users.getCurrentUser();
-
-                      Navigator.pushReplacementNamed(context, RoutesTable.home);
-                    } catch (e) {
-                      print('[Tony] login error:$e');
-                    } finally {
-                      progress.dismiss();
-                    }
-                  });
+                  login(context);
                 },
               ),
             ),
@@ -94,5 +84,28 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
         ),
       ),
     );
+  }
+
+  Future login(BuildContext context) async {
+    final progress = ProgressHUD.of(context);
+    progress.showWithText("Loading...");
+    FocusScope.of(context).unfocus(); // dismiss the keyboard
+    Future.delayed(Duration(microseconds: 500), () async {
+      try {
+        gitHubClient = getGithubClient(
+          useName: _userNameController.text,
+          password: _passwordController.text,
+          /**token: DotEnv().env["GITHUB_TOKEN"]*/
+        );
+
+        await gitHubClient.users.getCurrentUser();
+
+        Navigator.pushReplacementNamed(context, RoutesTable.home);
+      } catch (e) {
+        print('[Tony] login error:$e');
+      } finally {
+        progress.dismiss();
+      }
+    });
   }
 }
