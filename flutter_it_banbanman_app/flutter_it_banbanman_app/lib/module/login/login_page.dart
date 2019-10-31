@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_it_banbanman_app/module/api/github_api.dart';
 import 'package:flutter_it_banbanman_app/module/common/routes.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 
@@ -12,6 +14,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  final _userNameController = TextEditingController();
+  final _passwordController = TextEditingController();
   bool _isHidden = true;
 
   void _toggleVisibility() {
@@ -44,6 +49,7 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
                 padding: EdgeInsets.all(20),
                 child: TextFormField(
+                  controller: _userNameController,
                   decoration: InputDecoration(
                       labelText: "Name",
                       prefixIcon: Icon(Icons.people),
@@ -52,6 +58,7 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 child: TextFormField(
+                  controller: _passwordController,
                   obscureText: _isHidden,
                   decoration: InputDecoration(
                     labelText: "Password",
@@ -80,9 +87,19 @@ class _LoginPageState extends State<LoginPage> {
                   final progress = ProgressHUD.of(context);
                   progress.showWithText("Loading...");
                   FocusScope.of(context).unfocus(); // dismiss the keyboard
-                  Future.delayed(Duration(seconds: 1), () {
-                    Navigator.pushReplacementNamed(context, RoutesTable.home);
-                    progress.dismiss();
+                  Future.delayed(Duration(microseconds: 500), () async {
+                    try {
+                      gitHubClient = getGithubClient(useName: _userNameController.text, password: _passwordController.text, /*token: DotEnv().env["GITHUB_TOKEN"]*/);
+
+                      await gitHubClient.users.getCurrentUser();
+
+                      Navigator.pushReplacementNamed(context, RoutesTable.home);
+
+                    } catch (e) {
+                      print('[Tony] login error:$e');
+                    } finally {
+                      progress.dismiss();
+                    }
                   });
                 },
               ),

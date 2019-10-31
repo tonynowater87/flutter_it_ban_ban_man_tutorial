@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_it_banbanman_app/module/about/about.dart';
+import 'package:flutter_it_banbanman_app/module/common/routes.dart';
 import 'package:flutter_it_banbanman_app/module/main/home.dart';
 import 'package:flutter_it_banbanman_app/module/main/issue.dart';
 import 'package:flutter_it_banbanman_app/module/main/repo.dart';
@@ -8,7 +9,6 @@ import 'package:flutter_it_banbanman_app/module/profile/profile.dart';
 import 'package:flutter_it_banbanman_app/module/setting/setting.dart';
 import 'package:flutter_it_banbanman_app/module/setting/setting_language.dart';
 import 'package:flutter_it_banbanman_app/module/trending/trending.dart';
-import 'package:flutter_it_banbanman_app/module/common/routes.dart';
 
 import '../login/login_page.dart';
 import '../search/search_delegate.dart';
