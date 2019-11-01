@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_it_banbanman_app/model/account.dart';
 import 'package:flutter_it_banbanman_app/model/api/github_api.dart';
-import 'package:flutter_it_banbanman_app/module/common/preferenceRepository.dart';
+import 'package:flutter_it_banbanman_app/module/common/preference_repository.dart';
 import 'package:flutter_it_banbanman_app/module/common/routes.dart';
 import 'package:flutter_it_banbanman_app/module/common/utils.dart';
 import 'package:flutter_it_banbanman_app/module/login/login_form.dart';
@@ -10,7 +10,6 @@ import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:github/server.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 // 登入頁面
 class LoginPage extends StatefulWidget {
@@ -63,7 +62,10 @@ class _LoginPageState extends State<LoginPage> {
           /*token: DotEnv().env["GITHUB_TOKEN"]*/
         );
 
-        await gitHubClient.users.getCurrentUser();
+        CurrentUser user = await gitHubClient.users.getCurrentUser();
+
+        final account = Provider.of<AccountModel>(context);
+        account.updateUser(user);
 
         Fluttertoast.showToast(msg: "Login Success!");
 

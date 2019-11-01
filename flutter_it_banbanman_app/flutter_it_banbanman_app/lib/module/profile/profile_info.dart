@@ -33,7 +33,7 @@ class ProfileInfo extends StatelessWidget {
               color: _primaryTextTheme.caption.color,
             ),
             SizedBox(width: 4.0),
-            Text(location, style: _primaryTextTheme.caption)
+            Text(location ?? "No Location yet", style: _primaryTextTheme.caption)
           ],
         ),
       ],

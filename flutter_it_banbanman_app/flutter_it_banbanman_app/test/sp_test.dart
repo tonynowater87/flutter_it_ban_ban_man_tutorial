@@ -1,6 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:flutter_it_banbanman_app/module/common/constant.dart';
-import 'package:flutter_it_banbanman_app/module/common/preferenceRepository.dart';
+import 'package:flutter_it_banbanman_app/module/common/preference_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

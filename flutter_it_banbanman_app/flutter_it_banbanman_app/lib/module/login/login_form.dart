@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_it_banbanman_app/module/common/constant.dart';
-import 'package:flutter_it_banbanman_app/module/common/preferenceRepository.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_it_banbanman_app/module/common/preference_repository.dart';
 
 class LoginFormWidget extends StatefulWidget {
 

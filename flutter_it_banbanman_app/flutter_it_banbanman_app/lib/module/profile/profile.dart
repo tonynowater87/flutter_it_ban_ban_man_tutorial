@@ -2,27 +2,20 @@ import 'dart:core';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_it_banbanman_app/model/account.dart';
 import 'package:flutter_it_banbanman_app/module/main/repo.dart';
 import 'package:flutter_it_banbanman_app/module/profile/follow.dart';
 import 'package:flutter_it_banbanman_app/module/profile/profile_info.dart';
 import 'package:flutter_it_banbanman_app/module/profile/stars.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
-  final String imageUrl;
-  final String name;
-  final String bio;
-  final String location;
-
-  ProfilePage(
-      {Key key,
-      this.imageUrl = "https://avatars3.githubusercontent.com/u/9815472?s=460&v=4",
-      this.name = "Tony Liao",
-      this.bio,
-      this.location = "Taichung, Taiwan"})
-      : super(key: key);
+  ProfilePage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final account = Provider.of<AccountModel>(context);
+
     return DefaultTabController(
         child: Scaffold(
           body: NestedScrollView(
@@ -32,7 +25,7 @@ class ProfilePage extends StatelessWidget {
                 SliverAppBar(
                   pinned: true,
                   expandedHeight: 250,
-                  title: Text("Tony Liao"),
+                  title: Text(account.user.name),
                   leading: IconButton(
                     icon: Icon(Icons.arrow_back_ios),
                     onPressed: () {
@@ -44,10 +37,10 @@ class ProfilePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       ProfileInfo(
-                        avatarUrl:
-                            this.imageUrl,
-                        name: this.name,
-                        location: this.location,
+                        avatarUrl: account.user.avatarUrl,
+                        name: account.user.name,
+                        bio: account.user.bio ,
+                        location: account.user.location,
                       ),
                       SizedBox(
                         height: 48.0,

@@ -64,6 +64,8 @@ class GitmeRebornApp extends StatelessWidget {
 class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final account = Provider.of<AccountModel>(context);
+
     return DefaultTabController(
       length: 4,
       child: Scaffold(
@@ -92,12 +94,11 @@ class MainPage extends StatelessWidget {
             children: <Widget>[
               UserAccountsDrawerHeader(
                 decoration: BoxDecoration(color: Colors.blueGrey),
-                accountName: Text("Tony"),
-                accountEmail: Text("Tony@gmail.com"),
+                accountName: Text(account.user.name ?? ""),
+                accountEmail: Text(account.user.htmlUrl ?? ""),
                 currentAccountPicture: IconButton(
                   icon: CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        "https://avatars0.githubusercontent.com/u/26626322?s=40&v=4"),
+                    backgroundImage: NetworkImage(account.user.avatarUrl ?? ""),
                   ),
                   onPressed: () {
                     Navigator.pushNamed(context, RoutesTable.profile);

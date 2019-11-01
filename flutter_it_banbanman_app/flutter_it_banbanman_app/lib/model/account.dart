@@ -4,21 +4,26 @@ import 'package:github/server.dart';
 import 'api/github_api.dart';
 
 class AccountModel extends ChangeNotifier {
-
   CurrentUser _user;
   List<Repository> _repos;
   List<Issue> _issues;
   List<User> _followers;
   List<User> _followings;
 
+  CurrentUser get user => _user;
+
   List<Repository> get repos => _repos;
+
   List<Issue> get issues => _issues;
+
   List<User> get followers => _followers;
+
   List<User> get followings => _followings;
 
   fetchFollowings() async {
     await _ensureUser();
-    final List followingResult = await gitHubClient.getJSON("/users/${_user.login}/following");
+    final List followingResult =
+        await gitHubClient.getJSON("/users/${_user.login}/following");
     List<User> followingUsers = followingResult.map((user) {
       return User.fromJson(user);
     }).toList();
@@ -28,13 +33,16 @@ class AccountModel extends ChangeNotifier {
 
   fetchFollowers() async {
     await _ensureUser();
-    _followers = await gitHubClient.users.listUserFollowers(_user.login).toList();
+    _followers =
+        await gitHubClient.users.listUserFollowers(_user.login).toList();
     notifyListeners();
   }
 
   fetchRepos() async {
     await _ensureUser();
-    _repos = await gitHubClient.repositories.listUserRepositories(_user.login).toList();
+    _repos = await gitHubClient.repositories
+        .listUserRepositories(_user.login)
+        .toList();
     notifyListeners();
   }
 
@@ -68,6 +76,11 @@ class AccountModel extends ChangeNotifier {
     _issues = null;
     notifyListeners();
     await fetchIssues();
+    notifyListeners();
+  }
+
+  updateUser(CurrentUser user) {
+    _user = user;
     notifyListeners();
   }
 
