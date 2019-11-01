@@ -8,12 +8,32 @@ class AccountModel extends ChangeNotifier {
   CurrentUser _user;
   List<Repository> _repos;
   List<Issue> _issues;
+  List<User> _followers;
+  List<User> _followings;
 
   List<Repository> get repos => _repos;
   List<Issue> get issues => _issues;
+  List<User> get followers => _followers;
+  List<User> get followings => _followings;
 
   updateUser(CurrentUser user) {
     _user = user;
+    notifyListeners();
+  }
+
+  fetchFollowings() async {
+    await _ensureUser();
+    final List followingResult = await gitHubClient.getJSON("/users/${_user.login}/following");
+    List<User> followingUsers = followingResult.map((user) {
+      return User.fromJson(user);
+    }).toList();
+    _followings = followingUsers;
+    notifyListeners();
+  }
+
+  fetchFollowers() async {
+    await _ensureUser();
+    _followers = await gitHubClient.users.listUserFollowers(_user.login).toList();
     notifyListeners();
   }
 
@@ -25,6 +45,20 @@ class AccountModel extends ChangeNotifier {
 
   fetchIssues() async {
     _issues = await gitHubClient.issues.listAll().toList();
+    notifyListeners();
+  }
+
+  refreshFollowings() async {
+    _followings = null;
+    notifyListeners();
+    await fetchFollowings();
+    notifyListeners();
+  }
+
+  refreshFollowers() async {
+    _followers = null;
+    notifyListeners();
+    await fetchFollowers();
     notifyListeners();
   }
 

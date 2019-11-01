@@ -4,10 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_it_banbanman_app/module/main/repo.dart';
 import 'package:flutter_it_banbanman_app/module/profile/follow.dart';
-import 'package:flutter_it_banbanman_app/module/profile/follow_page.dart';
 import 'package:flutter_it_banbanman_app/module/profile/profile_info.dart';
 import 'package:flutter_it_banbanman_app/module/profile/stars.dart';
-
 
 class ProfilePage extends StatelessWidget {
   final String imageUrl;
