@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_it_banbanman_app/model/models/project.dart';
 import 'package:flutter_it_banbanman_app/module/common/custom_widget/language_label.dart';
-import 'package:flutter_it_banbanman_app/module/service/models/project.dart';
 
 class ProjectTile extends StatelessWidget {
   final Project project;

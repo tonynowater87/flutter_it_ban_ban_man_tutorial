@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_it_banbanman_app/module/api/github_api.dart';
+import 'package:flutter_it_banbanman_app/model/api/github_api.dart';
 import 'package:flutter_it_banbanman_app/module/common/tiles/repo_tile.dart';
 import 'package:flutter_it_banbanman_app/module/common/tiles/user_tile.dart';
 import 'package:github/server.dart';

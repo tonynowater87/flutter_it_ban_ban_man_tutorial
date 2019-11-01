@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_it_banbanman_app/model/models/github_trending_api.dart';
+import 'package:flutter_it_banbanman_app/model/models/project.dart';
 import 'package:flutter_it_banbanman_app/module/common/tiles/project_tile.dart';
-import 'package:flutter_it_banbanman_app/module/service/models/github_rending_api.dart';
-import 'package:flutter_it_banbanman_app/module/service/models/project.dart';
 import 'package:flutter_it_banbanman_app/module/trending/trending.dart';
 
 class TrendingProjectPage extends StatefulWidget {

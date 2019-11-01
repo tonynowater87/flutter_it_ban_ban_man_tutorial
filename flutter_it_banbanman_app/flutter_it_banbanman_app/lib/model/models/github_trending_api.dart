@@ -1,8 +1,9 @@
 import 'dart:convert';
 
-import 'package:flutter_it_banbanman_app/module/service/models/developer.dart';
-import 'package:flutter_it_banbanman_app/module/service/models/project.dart';
+import 'package:flutter_it_banbanman_app/model/models/project.dart';
 import 'package:http/http.dart' as http;
+
+import 'developer.dart';
 
 class GitHubTrendingApiError extends Error {
   String message;

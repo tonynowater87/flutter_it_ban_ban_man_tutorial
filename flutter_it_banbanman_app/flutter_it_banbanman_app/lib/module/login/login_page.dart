@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_it_banbanman_app/model/account.dart';
-import 'package:flutter_it_banbanman_app/module/api/github_api.dart';
+import 'package:flutter_it_banbanman_app/model/api/github_api.dart';
 import 'package:flutter_it_banbanman_app/module/common/routes.dart';
 import 'package:flutter_it_banbanman_app/module/login/login_form.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';

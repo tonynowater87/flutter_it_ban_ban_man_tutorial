@@ -1,6 +1,6 @@
-import 'package:flutter_it_banbanman_app/module/service/models/developer.dart';
-import 'package:flutter_it_banbanman_app/module/service/models/github_rending_api.dart';
-import 'package:flutter_it_banbanman_app/module/service/models/project.dart';
+import 'package:flutter_it_banbanman_app/model/models/developer.dart';
+import 'package:flutter_it_banbanman_app/model/models/github_trending_api.dart';
+import 'package:flutter_it_banbanman_app/model/models/project.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

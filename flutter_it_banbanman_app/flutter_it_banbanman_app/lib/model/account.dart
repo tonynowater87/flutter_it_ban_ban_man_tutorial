@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_it_banbanman_app/module/api/github_api.dart';
 import 'package:github/server.dart';
+
+import 'api/github_api.dart';
 
 class AccountModel extends ChangeNotifier {
 

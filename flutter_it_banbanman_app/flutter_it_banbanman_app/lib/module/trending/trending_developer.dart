@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_it_banbanman_app/module/service/models/developer.dart';
-import 'package:flutter_it_banbanman_app/module/service/models/github_rending_api.dart';
+import 'package:flutter_it_banbanman_app/model/models/developer.dart';
+import 'package:flutter_it_banbanman_app/model/models/github_trending_api.dart';
 import 'package:flutter_it_banbanman_app/module/trending/trending.dart';
 
 class TrendingDeveloperPage extends StatefulWidget {

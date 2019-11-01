@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_it_banbanman_app/model/models/github_trending_api.dart';
+import 'package:flutter_it_banbanman_app/model/models/project.dart';
 import 'package:flutter_it_banbanman_app/module/common/routes.dart';
 import 'package:flutter_it_banbanman_app/module/common/tiles/project_tile.dart';
-import 'package:flutter_it_banbanman_app/module/service/models/github_rending_api.dart';
-import 'package:flutter_it_banbanman_app/module/service/models/project.dart';
 import 'package:hnpwa_client/hnpwa_client.dart';
 import 'package:url_launcher/url_launcher.dart';
 
