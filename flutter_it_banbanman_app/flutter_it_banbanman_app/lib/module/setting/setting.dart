@@ -1,14 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_it_banbanman_app/model/setting.dart';
 import 'package:flutter_it_banbanman_app/module/common/routes.dart';
+import 'package:flutter_it_banbanman_app/module/common/themes.dart';
+import 'package:provider/provider.dart';
 
 class SettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final setting = Provider.of<SettingModel>(context);
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blueGrey,
         leading: BackButton(),
         title: Text("Setting"),
       ),
@@ -22,26 +26,31 @@ class SettingPage extends StatelessWidget {
                 children: <Widget>[
                   SquareWidget(
                     color: Colors.black,
+                    clickListener: () {
+                      setting.changeTheme(BlackTheme);
+                    },
                   ),
                   SquareWidget(
-                    color: Colors.blue,
-                  ),
+                      color: Colors.blue,
+                      clickListener: () {
+                        setting.changeTheme(BlueTheme);
+                      }),
                   SquareWidget(
-                    color: Colors.blueGrey,
-                  ),
+                      color: Colors.blueGrey,
+                      clickListener: () {
+                        setting.changeTheme(BlueGreyTheme);
+                      }),
                 ],
               )
             ],
             title: Text("Theme"),
             leading: Icon(
               Icons.palette,
-              color: Colors.blueGrey,
             ),
           ),
           ListTile(
             leading: Icon(
               Icons.language,
-              color: Colors.blueGrey,
             ),
             title: Text("Language"),
             trailing: Wrap(
@@ -68,9 +77,7 @@ class ThemeWidget extends StatelessWidget {
         itemBuilder: (context, index) {
           return ExpansionTile(
             children: <Widget>[
-              Card(
-                color: Colors.black,
-              ),
+              Card(color: Colors.black),
               Card(color: Colors.blue),
               Card(color: Colors.blueGrey),
             ],
@@ -93,10 +100,13 @@ class ThemeWidget extends StatelessWidget {
   }
 }
 
+typedef void OnSquareWidgetClickListener();
+
 class SquareWidget extends StatelessWidget {
   final Color color;
+  final OnSquareWidgetClickListener clickListener;
 
-  SquareWidget({Key key, this.color}) : super(key: key);
+  SquareWidget({Key key, this.color, this.clickListener}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +121,7 @@ class SquareWidget extends StatelessWidget {
             ),
           )),
       onTap: () {
-        print('[Tony] tap $color');
+        clickListener();
       },
     );
   }

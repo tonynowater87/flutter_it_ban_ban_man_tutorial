@@ -105,8 +105,6 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                 child: Text(
                   "登入",
                 ),
-                textColor: Colors.white,
-                color: Colors.blueGrey,
                 onPressed: () {
                   widget.onLogin(this);
                 },

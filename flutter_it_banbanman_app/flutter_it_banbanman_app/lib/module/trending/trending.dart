@@ -19,10 +19,8 @@ class _TrendingPageState extends State<TrendingPage> {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.black,
             leading: BackButton(),
             title: TabBar(
-              indicatorColor: Colors.white,
               tabs: <Widget>[Tab(text: "Project"), Tab(text: "Developer")],
             ),
             actions: <Widget>[

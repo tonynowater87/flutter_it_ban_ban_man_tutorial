@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_it_banbanman_app/model/account.dart';
+import 'package:flutter_it_banbanman_app/model/setting.dart';
 import 'package:flutter_it_banbanman_app/module/about/about.dart';
 import 'package:flutter_it_banbanman_app/module/common/routes.dart';
 import 'package:flutter_it_banbanman_app/module/main/home.dart';
@@ -22,23 +23,24 @@ Future main() async {
   print('[Tony] Token:$token');
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(
-        builder: (BuildContext context) => AccountModel(),
-      )
+      ChangeNotifierProvider(builder: (BuildContext context) => AccountModel()),
+      ChangeNotifierProvider(builder: (BuildContext context) => SettingModel())
     ],
     child: GitmeRebornApp(),
   ));
 }
 
 class GitmeRebornApp extends StatelessWidget {
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
+    final setting = Provider.of<SettingModel>(context);
+
     return MaterialApp(
       title: "Gitmme Reborn",
-      theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-      ),
+      theme: setting.themeData,
       routes: {
         RoutesTable.login: (context) => LoginPage(),
         RoutesTable.home: (context) => MainPage(),
@@ -93,7 +95,6 @@ class MainPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               UserAccountsDrawerHeader(
-                decoration: BoxDecoration(color: Colors.blueGrey),
                 accountName: Text(account.user.name ?? ""),
                 accountEmail: Text(account.user.htmlUrl ?? ""),
                 currentAccountPicture: IconButton(

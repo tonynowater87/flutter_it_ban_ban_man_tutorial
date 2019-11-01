@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_it_banbanman_app/model/api/github_api.dart';
+import 'package:flutter_it_banbanman_app/model/setting.dart';
 import 'package:flutter_it_banbanman_app/module/common/tiles/repo_tile.dart';
 import 'package:flutter_it_banbanman_app/module/common/tiles/user_tile.dart';
 import 'package:github/server.dart';
+import 'package:provider/provider.dart';
 
 enum SearchTypes { repos, users }
 
@@ -13,7 +15,8 @@ class MySearchDelegate extends SearchDelegate {
 
   @override
   ThemeData appBarTheme(BuildContext context) {
-    return super.appBarTheme(context);
+    var setting = Provider.of<SettingModel>(context);
+    return setting.themeData;
   }
 
   @override
