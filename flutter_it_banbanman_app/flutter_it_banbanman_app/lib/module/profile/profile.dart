@@ -3,6 +3,7 @@ import 'dart:core';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_it_banbanman_app/model/account.dart';
+import 'package:flutter_it_banbanman_app/module/common/custom_widget/badge_tab.dart';
 import 'package:flutter_it_banbanman_app/module/main/repo.dart';
 import 'package:flutter_it_banbanman_app/module/profile/follow.dart';
 import 'package:flutter_it_banbanman_app/module/profile/profile_info.dart';
@@ -50,10 +51,10 @@ class ProfilePage extends StatelessWidget {
                   bottom: TabBar(
                     labelPadding: EdgeInsets.zero,
                     tabs: <Widget>[
-                      Tab(text: "Repos"),
-                      Tab(text: "Starts"),
-                      Tab(text: "Followers"),
-                      Tab(text: "Following"),
+                      BadgeTab(labelText:"Repos", badgeText: "${account.user.publicReposCount}",),
+                      BadgeTab(labelText:"Starts",),
+                      BadgeTab(labelText:"Followers", badgeText: "${account.user.followersCount}",),
+                      BadgeTab(labelText:"Following", badgeText: "${account.user.followingCount}",),
                     ],
                   ),
                 )
