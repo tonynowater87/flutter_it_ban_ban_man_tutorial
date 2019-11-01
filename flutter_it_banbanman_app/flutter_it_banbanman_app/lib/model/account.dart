@@ -16,11 +16,6 @@ class AccountModel extends ChangeNotifier {
   List<User> get followers => _followers;
   List<User> get followings => _followings;
 
-  updateUser(CurrentUser user) {
-    _user = user;
-    notifyListeners();
-  }
-
   fetchFollowings() async {
     await _ensureUser();
     final List followingResult = await gitHubClient.getJSON("/users/${_user.login}/following");

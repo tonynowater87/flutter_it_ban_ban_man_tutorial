@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_it_banbanman_app/module/common/constant.dart';
+import 'package:flutter_it_banbanman_app/module/common/preferenceRepository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginFormWidget extends StatefulWidget {
 
   final Function(_LoginFormWidgetState state) onLogin;
+  bool _autoLogin = false;
 
   LoginFormWidget({Key key, this.onLogin}) : super(key: key);
 
@@ -12,16 +16,28 @@ class LoginFormWidget extends StatefulWidget {
 }
 
 class _LoginFormWidgetState extends State<LoginFormWidget> {
+
   FocusNode _passwordFocusNode = FocusNode();
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  PreferencesRepository _sp = PreferencesRepository();
 
   bool _isHidden = true;
 
   void _toggleVisibility() {
     setState(() {
       _isHidden = !_isHidden;
+    });
+  }
+
+  @override
+  void didUpdateWidget(LoginFormWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _sp.getAutoLogin().then((autoLogin) {
+      setState(() {
+        widget._autoLogin = autoLogin;
+      });
     });
   }
 
@@ -86,7 +102,6 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
             Container(
               width: double.infinity,
               height: 50,
-              margin: EdgeInsets.fromLTRB(32, 0, 32, 0),
               color: Colors.black12,
               child: FlatButton(
                 child: Text(
@@ -99,6 +114,25 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                 },
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Text("Auto Login"),
+                Checkbox(
+                  value: widget._autoLogin,
+                  onChanged: (value) {
+                    setState(() {
+                      widget._autoLogin = !widget._autoLogin;
+                      _sp.setAutoLogin(widget._autoLogin);
+                      if(widget._autoLogin) {
+                        _sp.setUserName(userNameController.text);
+                        _sp.setUserPwd(passwordController.text);
+                      }
+                    });
+                  },
+                )
+              ],
+            )
           ],
         ),
       ),
