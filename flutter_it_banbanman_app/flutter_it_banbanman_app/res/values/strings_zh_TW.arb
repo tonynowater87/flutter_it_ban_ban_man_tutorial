@@ -1,7 +1,4 @@
 {
-  "login": "登入",
-  "username": "使用者名稱/帳號",
-  "password": "密碼",
   "home": "首頁",
   "repo": "倉庫",
   "activity": "活動",
@@ -10,17 +7,51 @@
   "setting": "設定",
   "about": "關於",
   "signOut": "登出",
-  "search": "搜尋",
-  "searchRepos": "搜尋倉庫",
-  "searchUsers": "搜尋使用者",
   "theme": "主題",
   "language": "語言",
-  "switchLangMsg": "切換語言成 {lang}",
   "loading": "讀取中...",
-  "loginSuccess": "登入成功",
-  "loginFail": "登入失敗{e}",
-  "autoLogin": "自動登入",
+
+  "login": "登入",
+  "login_username": "使用者名稱/帳號",
+  "login_username_hint": "你的Github使用者名稱/帳號",
+  "login_username_error_msg": "請輸入你的使用者名稱/帳號",
+  "login_password": "密碼",
+  "login_password_hint": "你的Github密碼",
+  "login_password_error_msg": "請輸入你的密碼",
+  "login_success": "登入成功",
+  "login_fail": "登入失敗{$e}",
+  "login_auto_login": "自動登入",
+
+  "main_hot_news": "熱門新聞",
+  "main_latest_news": "最近新聞",
+  "main_comments": "自 $user | $comments 評論",
+  "main_trending": "Github 趨勢...",
+
   "language_system": "跟隨系統",
   "language_chinese": "中文",
-  "language_english": "英文"
+  "language_english": "英文",
+
+  "profile_no_bio": "尚無介紹",
+  "profile_no_location": "尚無地區",
+  "profile_repo": "倉庫",
+  "profile_star": "星星",
+  "profile_follower": "追隨者",
+  "profile_following": "追隨中",
+
+  "trending_project": "倉庫",
+  "trending_developer": "開發者",
+  "trending_date": "時間區間",
+  "trending_date_daily": "天",
+  "trending_date_weekly": "週",
+  "trending_date_monthly": "月",
+
+  "search": "搜尋",
+  "search_repos": "搜尋倉庫",
+  "search_users": "搜尋使用者",
+  "search_suggestion_repo": "搜尋倉庫 $query ...",
+  "search_suggestion_user": "搜尋使用者 $query ...",
+
+  "dialog_logout_title": "確定登出？",
+  "dialog_cancel": "取消",
+  "dialog_confirm": "確定"
 }

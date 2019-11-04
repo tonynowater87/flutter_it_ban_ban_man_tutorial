@@ -68,11 +68,11 @@ class _LoginPageState extends State<LoginPage> {
         final account = Provider.of<AccountModel>(context);
         account.updateUser(user);
 
-        Fluttertoast.showToast(msg: S.of(context).loginSuccess);
+        Fluttertoast.showToast(msg: S.of(context).login_success);
 
         Navigator.pushReplacementNamed(context, RoutesTable.home);
       } catch (e) {
-        Fluttertoast.showToast(msg: "${S.of(context).loginFail}");
+        Fluttertoast.showToast(msg: S.of(context).login_fail(e));
         print('[Tony] login error:$e');
       } finally {
         callback();

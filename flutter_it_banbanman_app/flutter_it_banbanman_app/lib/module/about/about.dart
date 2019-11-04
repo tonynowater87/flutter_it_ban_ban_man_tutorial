@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_it_banbanman_app/generated/i18n.dart';
 import 'package:package_info/package_info.dart';
 
 class AboutPage extends StatefulWidget {
@@ -25,7 +26,7 @@ class _AboutPageState extends State<AboutPage> {
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(),
-        title: Text("About"),
+        title: Text(S.of(context).about),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

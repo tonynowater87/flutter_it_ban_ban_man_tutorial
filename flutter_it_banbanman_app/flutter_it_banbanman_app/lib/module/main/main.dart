@@ -1,81 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_it_banbanman_app/generated/i18n.dart';
 import 'package:flutter_it_banbanman_app/model/account.dart';
-import 'package:flutter_it_banbanman_app/model/setting.dart';
-import 'package:flutter_it_banbanman_app/module/about/about.dart';
-import 'package:flutter_it_banbanman_app/module/common/locale/overriden_localization_delegate.dart';
-import 'package:flutter_it_banbanman_app/module/common/locale_handler.dart';
 import 'package:flutter_it_banbanman_app/module/common/routes.dart';
 import 'package:flutter_it_banbanman_app/module/main/home.dart';
 import 'package:flutter_it_banbanman_app/module/main/issue.dart';
 import 'package:flutter_it_banbanman_app/module/main/repo.dart';
-import 'package:flutter_it_banbanman_app/module/profile/profile.dart';
-import 'package:flutter_it_banbanman_app/module/setting/setting_language.dart';
-import 'package:flutter_it_banbanman_app/module/setting/setting_page.dart';
-import 'package:flutter_it_banbanman_app/module/trending/trending.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
-import '../login/login_page.dart';
 import '../search/search_delegate.dart';
-
-Future main() async {
-  print('[Tony] app onCreate');
-  await DotEnv().load('.env');
-  String token = DotEnv().env["GITHUB_TOKEN"];
-  print('[Tony] Token:$token');
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(builder: (BuildContext context) => AccountModel()),
-      ChangeNotifierProvider(builder: (BuildContext context) => SettingModel())
-    ],
-    child: GitmeRebornApp(),
-  ));
-}
-
-class GitmeRebornApp extends StatelessWidget with LocaleHandler {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    final setting = Provider.of<SettingModel>(context);
-
-    return MaterialApp(
-      title: "Gitmme Reborn",
-      theme: setting.themeData,
-      routes: {
-        RoutesTable.login: (context) => LoginPage(),
-        RoutesTable.home: (context) => MainPage(),
-        RoutesTable.profile: (context) => ProfilePage(),
-        RoutesTable.trending: (context) => TrendingPage(),
-        RoutesTable.setting: (context) => SettingPage(),
-        RoutesTable.settingLanguage: (context) => SettingLanguagePage(),
-        RoutesTable.about: (context) => AboutPage(),
-      },
-      localizationsDelegates: [
-        OverriddenLocalizationsDelegate(setting.locale),
-        S.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: S.delegate.supportedLocales,
-      localeResolutionCallback: (locale, supportedLocales) {
-        var resolvedLocale = resolveLocale(locale, supportedLocales);
-        print('[Tony] localeResolutionCallback:$resolvedLocale');
-        return resolvedLocale;
-      },
-      onGenerateRoute: (settings) {
-        print('[Tony] initial value is RouteSettings("/", null)');
-        switch (settings.name) {
-          case RoutesTable.root:
-            return MaterialPageRoute(builder: (context) => LoginPage());
-          default:
-            return MaterialPageRoute(builder: (context) => LoginPage());
-        }
-      },
-    );
-  }
-}
 
 // 主頁面
 class MainPage extends StatelessWidget {
@@ -156,14 +88,14 @@ class MainPage extends StatelessWidget {
                       context: context,
                       barrierDismissible: false,
                       builder: (context) => AlertDialog(
-                            content: Text("確定登出?"),
+                            content: Text(S.of(context).dialog_logout_title),
                             actions: <Widget>[
                               FlatButton(
-                                child: Text("取消"),
+                                child: Text(S.of(context).dialog_cancel),
                                 onPressed: () => Navigator.pop(context),
                               ),
                               FlatButton(
-                                child: Text("確定"),
+                                child: Text(S.of(context).dialog_confirm),
                                 onPressed: () =>
                                     Navigator.pushNamedAndRemoveUntil(
                                         context,

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_it_banbanman_app/generated/i18n.dart';
 
 class ProfileInfo extends StatelessWidget {
   final String avatarUrl;
@@ -22,7 +23,7 @@ class ProfileInfo extends StatelessWidget {
         SizedBox(height: 8.0),
         Text(name, style: _primaryTextTheme.subtitle),
         SizedBox(height: 6.0),
-        Text(bio ?? "No bio yet", style: _primaryTextTheme.body1),
+        Text(bio ?? S.of(context).profile_no_bio, style: _primaryTextTheme.body1),
         SizedBox(height: 6.0),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -33,7 +34,7 @@ class ProfileInfo extends StatelessWidget {
               color: _primaryTextTheme.caption.color,
             ),
             SizedBox(width: 4.0),
-            Text(location ?? "No Location yet", style: _primaryTextTheme.caption)
+            Text(location ?? S.of(context).profile_no_location, style: _primaryTextTheme.caption)
           ],
         ),
       ],

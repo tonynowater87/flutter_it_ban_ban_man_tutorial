@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_it_banbanman_app/generated/i18n.dart';
 import 'package:flutter_it_banbanman_app/model/api/github_api.dart';
 import 'package:flutter_it_banbanman_app/model/setting.dart';
 import 'package:flutter_it_banbanman_app/module/common/tiles/repo_tile.dart';
@@ -40,11 +41,11 @@ class MySearchDelegate extends SearchDelegate {
             CheckedPopupMenuItem(
                 value: SearchTypes.repos,
                 checked: _searchTypes == SearchTypes.repos,
-                child: Text("Search Repos")),
+                child: Text(S.of(context).search_repos)),
             CheckedPopupMenuItem(
                 value: SearchTypes.users,
                 checked: _searchTypes == SearchTypes.users,
-                child: Text("Search Users"))
+                child: Text(S.of(context).search_users))
           ];
         },
       )
@@ -62,9 +63,9 @@ class MySearchDelegate extends SearchDelegate {
     // 搜尋建議頁面
     switch (_searchTypes) {
       case SearchTypes.users:
-        return Center(child: Text("Search users that contain '$query' ..."));
+        return Center(child: Text(S.of(context).search_suggestion_user(query)));
       case SearchTypes.repos:
-        return Center(child: Text("Search repos that contain '$query' ..."));
+        return Center(child: Text(S.of(context).search_suggestion_repo(query)));
     }
 
     throw Exception("Illegal SearchType:$_searchTypes");

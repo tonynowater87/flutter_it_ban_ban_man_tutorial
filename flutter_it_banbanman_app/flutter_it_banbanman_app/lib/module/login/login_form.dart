@@ -53,16 +53,16 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
             TextFormField(
               validator: (value) {
                 if (value.isEmpty) {
-                  return "Please enter your user name";
+                  return S.of(context).login_username_error_msg;
                 } else {
                   return null;
                 }
               },
               controller: userNameController,
               decoration: InputDecoration(
-                  labelText: "Name",
+                  labelText: S.of(context).login_username,
                   prefixIcon: Icon(Icons.people),
-                  hintText: "Your Github account user name."),
+                  hintText: S.of(context).login_username_hint),
               onFieldSubmitted: (value) {
                 FocusScope.of(context).requestFocus(_passwordFocusNode);
               },
@@ -73,7 +73,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
             TextFormField(
               validator: (value) {
                 if (value.isEmpty) {
-                  return "Please enter your password";
+                  return S.of(context).login_password_error_msg;
                 } else {
                   return null;
                 }
@@ -82,14 +82,14 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
               controller: passwordController,
               obscureText: _isHidden,
               decoration: InputDecoration(
-                labelText: "Password",
+                labelText: S.of(context).login_password,
                 prefixIcon: Icon(Icons.lock),
                 suffixIcon: IconButton(
                     icon: _isHidden
                         ? Icon(Icons.visibility_off)
                         : Icon(Icons.visibility),
                     onPressed: _toggleVisibility),
-                hintText: "Your Github account password ...",
+                hintText: S.of(context).login_password_hint,
               ),
               onFieldSubmitted: (value) {
                 widget.onLogin(this);
@@ -112,7 +112,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                Text(S.of(context).autoLogin),
+                Text(S.of(context).login_auto_login),
                 Checkbox(
                   value: widget._autoLogin,
                   onChanged: (value) {

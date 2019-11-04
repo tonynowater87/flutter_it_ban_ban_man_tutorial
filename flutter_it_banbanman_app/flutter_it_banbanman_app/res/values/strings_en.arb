@@ -1,7 +1,4 @@
 {
-  "login": "Login",
-  "username": "Username",
-  "password": "password",
   "home": "Home",
   "repo": "Repo",
   "activity": "Activity",
@@ -10,17 +7,51 @@
   "setting": "Setting",
   "about": "About",
   "signOut": "Sign out",
-  "search": "Search",
-  "searchRepos": "Search Repos",
-  "searchUsers": "Search Users",
   "theme": "Theme",
   "language": "Language",
-  "switchLangMsg": "Switch language to {lang}",
   "loading": "Loading...",
-  "loginSuccess": "Login Success",
-  "loginFail": "Login Fail{e}",
-  "autoLogin": "Auto Login",
+
+  "login": "Login",
+  "login_username": "Username",
+  "login_username_hint": "Your Github account user name.",
+  "login_username_error_msg": "Please enter your user name",
+  "login_password": "password",
+  "login_password_hint": "Your Github account password.",
+  "login_password_error_msg": "Please enter your password",
+  "login_success": "Login Success",
+  "login_fail": "Login Fail{$e}",
+  "login_auto_login": "Auto Login",
+
+  "main_hot_news": "Hot Hacker News",
+  "main_latest_news": "Latest Hacker News",
+  "main_comments": "by $user | $comments comments",
+  "main_trending": "Github Trending...",
+
   "language_system": "Follow System",
   "language_chinese": "Chinese",
-  "language_english": "English"
+  "language_english": "English",
+
+  "profile_no_bio": "No bio yet",
+  "profile_no_location": "No location yet",
+  "profile_repo": "Repo",
+  "profile_star": "Stars",
+  "profile_follower": "Followers",
+  "profile_following": "Followings",
+
+  "trending_project": "Project",
+  "trending_developer": "Developer",
+  "trending_date": "Date range",
+  "trending_date_daily": "Daily",
+  "trending_date_weekly": "Weekly",
+  "trending_date_monthly": "Monthly",
+
+  "search": "Search",
+  "search_repos": "Search Repos",
+  "search_users": "Search Users",
+  "search_suggestion_repo": "Search repos that contain $query ...",
+  "search_suggestion_user": "Search users that contain $query ...",
+
+  "dialog_logout_title": "Are you sure to logout?",
+  "dialog_cancel": "No",
+  "dialog_confirm": "Yes"
 }

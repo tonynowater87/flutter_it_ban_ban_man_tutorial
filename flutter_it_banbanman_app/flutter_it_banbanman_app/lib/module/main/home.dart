@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_it_banbanman_app/generated/i18n.dart';
 import 'package:flutter_it_banbanman_app/model/models/github_trending_api.dart';
 import 'package:flutter_it_banbanman_app/model/models/project.dart';
 import 'package:flutter_it_banbanman_app/module/common/routes.dart';
@@ -42,7 +43,7 @@ class _HomePageState extends State<HomePage> {
                 thickness: 2,
               ),
               ListTile(
-                title: Text("Hackernews Top"),
+                title: Text(S.of(context).main_hot_news),
                 dense: true,
                 trailing: Icon(Icons.chevron_right),
                 onTap: () {},
@@ -58,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                 thickness: 2,
               ),
               ListTile(
-                title: Text("Hackernews New"),
+                title: Text(S.of(context).main_latest_news),
                 dense: true,
                 trailing: Icon(Icons.chevron_right),
                 onTap: () {},
@@ -74,7 +75,7 @@ class _HomePageState extends State<HomePage> {
                 thickness: 2,
               ),
               ListTile(
-                title: Text("Github Trendings..."),
+                title: Text(S.of(context).main_trending),
                 dense: true,
                 trailing: Icon(Icons.chevron_right),
                 onTap: () {
@@ -123,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                 return ListTile(
                   title: Text(item.title),
                   subtitle:
-                      Text("by ${item.user} | ${item.commentsCount} comments"),
+                      Text(S.of(context).main_comments(item.user, item.commentsCount.toString())),
                   onTap: () {
                     _launchURL(item.url);
                   },
