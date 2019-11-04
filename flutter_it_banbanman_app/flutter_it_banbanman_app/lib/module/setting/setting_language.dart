@@ -5,7 +5,9 @@ import 'package:flutter_it_banbanman_app/generated/i18n.dart';
 import 'package:flutter_it_banbanman_app/model/setting.dart';
 import 'package:provider/provider.dart';
 
-enum Language { System, Chinese, English }
+enum Language {
+  System, Chinese, English
+}
 
 class SettingLanguagePage extends StatefulWidget {
   @override

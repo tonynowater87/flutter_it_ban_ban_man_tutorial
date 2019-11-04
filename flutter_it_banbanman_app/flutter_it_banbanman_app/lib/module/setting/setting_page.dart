@@ -5,6 +5,7 @@ import 'package:flutter_it_banbanman_app/generated/i18n.dart';
 import 'package:flutter_it_banbanman_app/model/setting.dart';
 import 'package:flutter_it_banbanman_app/module/common/routes.dart';
 import 'package:flutter_it_banbanman_app/module/common/themes.dart';
+import 'package:flutter_it_banbanman_app/module/common/utils.dart';
 import 'package:provider/provider.dart';
 
 class SettingPage extends StatelessWidget {
@@ -57,7 +58,7 @@ class SettingPage extends StatelessWidget {
             trailing: Wrap(
               crossAxisAlignment: WrapCrossAlignment.center,
               children: <Widget>[
-                Text(setting.language.toString()),
+                Text(getLanguageName(context, setting.language)),
                 Icon(Icons.keyboard_arrow_right)
               ],
             ),
