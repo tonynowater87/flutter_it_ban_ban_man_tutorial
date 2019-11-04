@@ -8,7 +8,6 @@ import 'package:flutter_it_banbanman_app/module/common/routes.dart';
 import 'package:flutter_it_banbanman_app/module/common/utils.dart';
 import 'package:flutter_it_banbanman_app/module/login/login_form.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:github/server.dart';
 import 'package:provider/provider.dart';
 
@@ -24,10 +23,21 @@ class _LoginPageState extends State<LoginPage> {
   PreferencesRepository _sp = PreferencesRepository();
 
   @override
+  void initState() {
+    super.initState();
+    print('[Tony] initState');
+    _checkIfAutoLogin();
+  }
+
+  @override
+  void didUpdateWidget(LoginPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    print('[Tony] didUpdateWidget');
+  }
+
+  @override
   Widget build(BuildContext context) {
-
-    _logSp();
-
+    print('[Tony] build');
     return ProgressHUD(
         child: Builder(
             builder: (context) => Scaffold(
@@ -79,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  void _logSp() async {
+  void _checkIfAutoLogin() async {
     var userName = await _sp.getUserName();
     var userPwd = await _sp.getUserPwd();
     var autoLogin = await _sp.getAutoLogin();
