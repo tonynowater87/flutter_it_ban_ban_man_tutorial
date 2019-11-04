@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_it_banbanman_app/generated/i18n.dart';
 import 'package:flutter_it_banbanman_app/model/account.dart';
 import 'package:flutter_it_banbanman_app/model/setting.dart';
 import 'package:flutter_it_banbanman_app/module/about/about.dart';
+import 'package:flutter_it_banbanman_app/module/common/locale/overriden_localization_delegate.dart';
+import 'package:flutter_it_banbanman_app/module/common/locale_handler.dart';
 import 'package:flutter_it_banbanman_app/module/common/routes.dart';
 import 'package:flutter_it_banbanman_app/module/main/home.dart';
 import 'package:flutter_it_banbanman_app/module/main/issue.dart';
 import 'package:flutter_it_banbanman_app/module/main/repo.dart';
 import 'package:flutter_it_banbanman_app/module/profile/profile.dart';
-import 'package:flutter_it_banbanman_app/module/setting/setting.dart';
 import 'package:flutter_it_banbanman_app/module/setting/setting_language.dart';
+import 'package:flutter_it_banbanman_app/module/setting/setting_page.dart';
 import 'package:flutter_it_banbanman_app/module/trending/trending.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../login/login_page.dart';
@@ -30,12 +34,10 @@ Future main() async {
   ));
 }
 
-class GitmeRebornApp extends StatelessWidget {
-
+class GitmeRebornApp extends StatelessWidget with LocaleHandler {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     final setting = Provider.of<SettingModel>(context);
 
     return MaterialApp(
@@ -50,7 +52,20 @@ class GitmeRebornApp extends StatelessWidget {
         RoutesTable.settingLanguage: (context) => SettingLanguagePage(),
         RoutesTable.about: (context) => AboutPage(),
       },
+      localizationsDelegates: [
+        OverriddenLocalizationsDelegate(setting.locale),
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
+      localeResolutionCallback: (locale, supportedLocales) {
+        var resolvedLocale = resolveLocale(locale, supportedLocales);
+        print('[Tony] localeResolutionCallback:$resolvedLocale');
+        return resolvedLocale;
+      },
       onGenerateRoute: (settings) {
+        print('[Tony] initial value is RouteSettings("/", null)');
         switch (settings.name) {
           case RoutesTable.root:
             return MaterialPageRoute(builder: (context) => LoginPage());
@@ -75,10 +90,10 @@ class MainPage extends StatelessWidget {
           title: TabBar(
             labelPadding: EdgeInsets.all(0),
             tabs: <Widget>[
-              Tab(text: "Home"),
-              Tab(text: "Repo"),
-              Tab(text: "Activity"),
-              Tab(text: "Issues"),
+              Tab(text: S.of(context).home),
+              Tab(text: S.of(context).repo),
+              Tab(text: S.of(context).activity),
+              Tab(text: S.of(context).issues),
             ],
           ),
           actions: <Widget>[
@@ -114,28 +129,28 @@ class MainPage extends StatelessWidget {
               ),
               DrawerTitle(
                 iconData: Icons.trending_up,
-                text: "趨勢",
+                text: S.of(context).trending,
                 onPressed: () {
                   Navigator.pushNamed(context, RoutesTable.trending);
                 },
               ),
               DrawerTitle(
                 iconData: Icons.settings,
-                text: "設定",
+                text: S.of(context).setting,
                 onPressed: () {
                   Navigator.pushNamed(context, RoutesTable.setting);
                 },
               ),
               DrawerTitle(
                 iconData: Icons.info,
-                text: "關於",
+                text: S.of(context).about,
                 onPressed: () {
                   Navigator.pushNamed(context, RoutesTable.about);
                 },
               ),
               DrawerTitle(
                 iconData: Icons.power_settings_new,
-                text: "登出",
+                text: S.of(context).signOut,
                 onPressed: () async {
                   await showDialog(
                       context: context,

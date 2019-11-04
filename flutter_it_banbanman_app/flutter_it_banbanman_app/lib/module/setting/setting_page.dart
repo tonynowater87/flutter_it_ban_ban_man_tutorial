@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_it_banbanman_app/generated/i18n.dart';
 import 'package:flutter_it_banbanman_app/model/setting.dart';
 import 'package:flutter_it_banbanman_app/module/common/routes.dart';
 import 'package:flutter_it_banbanman_app/module/common/themes.dart';
@@ -14,7 +15,7 @@ class SettingPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(),
-        title: Text("Setting"),
+        title: Text(S.of(context).setting),
       ),
       body: ListView(
         children: <Widget>[
@@ -43,7 +44,7 @@ class SettingPage extends StatelessWidget {
                 ],
               )
             ],
-            title: Text("Theme"),
+            title: Text(S.of(context).theme),
             leading: Icon(
               Icons.palette,
             ),
@@ -52,11 +53,11 @@ class SettingPage extends StatelessWidget {
             leading: Icon(
               Icons.language,
             ),
-            title: Text("Language"),
+            title: Text(S.of(context).language),
             trailing: Wrap(
               crossAxisAlignment: WrapCrossAlignment.center,
               children: <Widget>[
-                Text("English"),
+                Text(setting.language.toString()),
                 Icon(Icons.keyboard_arrow_right)
               ],
             ),
@@ -85,7 +86,7 @@ class ThemeWidget extends StatelessWidget {
               children: <Widget>[
                 Icon(Icons.palette),
                 SizedBox(width: 16),
-                Text("Theme"),
+                Text(S.of(context).theme),
                 Icon(Icons.keyboard_arrow_up)
               ],
             ),

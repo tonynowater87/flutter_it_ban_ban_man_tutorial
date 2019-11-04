@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_it_banbanman_app/generated/i18n.dart';
 import 'package:flutter_it_banbanman_app/module/common/preference_repository.dart';
 
 class LoginFormWidget extends StatefulWidget {
@@ -102,9 +103,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
               height: 50,
               color: Colors.black12,
               child: FlatButton(
-                child: Text(
-                  "登入",
-                ),
+                child: Text(S.of(context).login),
                 onPressed: () {
                   widget.onLogin(this);
                 },
@@ -113,7 +112,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                Text("Auto Login"),
+                Text(S.of(context).autoLogin),
                 Checkbox(
                   value: widget._autoLogin,
                   onChanged: (value) {

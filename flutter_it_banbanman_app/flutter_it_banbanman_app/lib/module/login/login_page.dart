@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_it_banbanman_app/generated/i18n.dart';
 import 'package:flutter_it_banbanman_app/model/account.dart';
 import 'package:flutter_it_banbanman_app/model/api/github_api.dart';
 import 'package:flutter_it_banbanman_app/module/common/preference_repository.dart';
@@ -33,14 +34,14 @@ class _LoginPageState extends State<LoginPage> {
                 appBar: AppBar(
                   title: Container(
                     alignment: Alignment.centerLeft,
-                    child: Text("登入"),
+                    child: Text(S.of(context).login),
                   ),
                 ),
                 body: LoginFormWidget(
                   onLogin: (state) {
                     if (state.formKey.currentState.validate()) {
                       final progress = ProgressHUD.of(context);
-                      progress.showWithText("Loading...");
+                      progress.showWithText(S.of(context).loading);
                       FocusScope.of(context).unfocus(); // dismiss the keyboard
                       _login(context, state.userNameController.text,
                           state.passwordController.text, () {
@@ -67,11 +68,11 @@ class _LoginPageState extends State<LoginPage> {
         final account = Provider.of<AccountModel>(context);
         account.updateUser(user);
 
-        Fluttertoast.showToast(msg: "Login Success!");
+        Fluttertoast.showToast(msg: S.of(context).loginSuccess);
 
         Navigator.pushReplacementNamed(context, RoutesTable.home);
       } catch (e) {
-        Fluttertoast.showToast(msg: "Login Failure ($e)!");
+        Fluttertoast.showToast(msg: "${S.of(context).loginFail}");
         print('[Tony] login error:$e');
       } finally {
         callback();
@@ -86,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
     print('[Tony] build login page:$userName, $userPwd, $autoLogin');
 
     if (autoLogin) {
-      showToast("auto login ...");
+      showToast(S.of(context).loading);
       _login(context, userName, userPwd, () {});
     }
   }
