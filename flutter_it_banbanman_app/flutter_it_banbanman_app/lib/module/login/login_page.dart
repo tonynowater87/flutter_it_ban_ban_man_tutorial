@@ -43,8 +43,7 @@ class _LoginPageState extends State<LoginPage> {
                       final progress = ProgressHUD.of(context);
                       progress.showWithText(S.of(context).loading);
                       FocusScope.of(context).unfocus(); // dismiss the keyboard
-                      _login(context, state.userNameController.text,
-                          state.passwordController.text, () {
+                      _login(context, state.userNameController.text, state.passwordController.text, () {
                         print('[Tony] login callback');
                         progress.dismiss();
                       });
@@ -68,12 +67,12 @@ class _LoginPageState extends State<LoginPage> {
         final account = Provider.of<AccountModel>(context);
         account.updateUser(user);
 
-        Fluttertoast.showToast(msg: S.of(context).login_success);
+        showToast(S.of(context).login_success);
 
         Navigator.pushReplacementNamed(context, RoutesTable.home);
       } catch (e) {
-        Fluttertoast.showToast(msg: S.of(context).login_fail(e));
         print('[Tony] login error:$e');
+        showToast(S.of(context).login_fail(e.toString()));
       } finally {
         callback();
       }
@@ -86,7 +85,8 @@ class _LoginPageState extends State<LoginPage> {
     var autoLogin = await _sp.getAutoLogin();
     print('[Tony] build login page:$userName, $userPwd, $autoLogin');
 
-    if (autoLogin) {
+    if (autoLogin ?? false) {
+      print('[Tony] auto login ...');
       showToast(S.of(context).loading);
       _login(context, userName, userPwd, () {});
     }

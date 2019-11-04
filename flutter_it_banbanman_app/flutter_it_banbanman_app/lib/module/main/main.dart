@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_it_banbanman_app/generated/i18n.dart';
 import 'package:flutter_it_banbanman_app/model/account.dart';
+import 'package:flutter_it_banbanman_app/module/common/preference_repository.dart';
 import 'package:flutter_it_banbanman_app/module/common/routes.dart';
 import 'package:flutter_it_banbanman_app/module/main/home.dart';
 import 'package:flutter_it_banbanman_app/module/main/issue.dart';
@@ -96,11 +97,16 @@ class MainPage extends StatelessWidget {
                               ),
                               FlatButton(
                                 child: Text(S.of(context).dialog_confirm),
-                                onPressed: () =>
-                                    Navigator.pushNamedAndRemoveUntil(
-                                        context,
-                                        RoutesTable.login,
-                                        ModalRoute.withName(RoutesTable.login)),
+                                onPressed: () {
+                                  PreferencesRepository _sp = PreferencesRepository();
+                                  _sp.setUserName("");
+                                  _sp.setUserPwd("");
+                                  _sp.setAutoLogin(false);
+                                  Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      RoutesTable.login,
+                                      ModalRoute.withName(RoutesTable.login));
+                                }
                               )
                             ],
                           ));
