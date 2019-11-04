@@ -16,10 +16,12 @@ class ProfileInfo extends StatelessWidget {
     TextTheme _primaryTextTheme = Theme.of(context).primaryTextTheme;
     return Column(
       children: <Widget>[
-        CircleAvatar(
-          radius: 36.0,
-          backgroundImage: NetworkImage(avatarUrl),
-        ),
+        Hero(
+            tag: 'avatar',
+            child: CircleAvatar(
+              radius: 36.0,
+              backgroundImage: NetworkImage(avatarUrl),
+            )),
         SizedBox(height: 8.0),
         Text(name, style: _primaryTextTheme.subtitle),
         SizedBox(height: 6.0),
@@ -41,4 +43,3 @@ class ProfileInfo extends StatelessWidget {
     );
   }
 }
-

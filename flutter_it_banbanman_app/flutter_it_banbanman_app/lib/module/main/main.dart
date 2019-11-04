@@ -46,9 +46,12 @@ class MainPage extends StatelessWidget {
                 accountName: Text(account.user.name ?? ""),
                 accountEmail: Text(account.user.htmlUrl ?? ""),
                 currentAccountPicture: IconButton(
-                  icon: CircleAvatar(
-                    backgroundImage: NetworkImage(account.user.avatarUrl ?? ""),
-                  ),
+                  icon: Hero(
+                      tag: 'avatar',
+                      child: CircleAvatar(
+                        backgroundImage:
+                            NetworkImage(account.user.avatarUrl ?? ""),
+                      )),
                   onPressed: () {
                     Navigator.pushNamed(context, RoutesTable.profile);
                   },
