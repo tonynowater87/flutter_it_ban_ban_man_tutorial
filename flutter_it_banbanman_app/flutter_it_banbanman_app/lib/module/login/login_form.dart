@@ -51,7 +51,9 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Image.asset("assets/images/login_sign.png"),
+              Hero(
+                  tag: 'splash-image',
+                  child: Image.asset("assets/images/login_sign.png", width: 200, height: 100,)),
               TextFormField(
                 validator: (value) {
                   if (value.isEmpty) {

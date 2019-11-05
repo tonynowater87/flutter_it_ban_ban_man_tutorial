@@ -7,6 +7,7 @@ import 'package:flutter_it_banbanman_app/model/setting.dart';
 import 'package:flutter_it_banbanman_app/module/profile/profile.dart';
 import 'package:flutter_it_banbanman_app/module/setting/setting_language.dart';
 import 'package:flutter_it_banbanman_app/module/setting/setting_page.dart';
+import 'package:flutter_it_banbanman_app/module/splash/splash_page.dart';
 import 'package:flutter_it_banbanman_app/module/trending/trending.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -42,6 +43,7 @@ class GitmeRebornApp extends StatelessWidget with LocaleHandler {
       title: "Gitmme Reborn",
       theme: setting.themeData,
       routes: {
+        RoutesTable.splash: (context) => SplashPage(),
         RoutesTable.login: (context) => LoginPage(),
         RoutesTable.home: (context) => MainPage(),
         RoutesTable.profile: (context) => ProfilePage(),
@@ -66,9 +68,9 @@ class GitmeRebornApp extends StatelessWidget with LocaleHandler {
         print('[Tony] initial value is RouteSettings("/", null)');
         switch (settings.name) {
           case RoutesTable.root:
-            return MaterialPageRoute(builder: (context) => LoginPage());
+            return MaterialPageRoute(builder: (context) => SplashPage());
           default:
-            return MaterialPageRoute(builder: (context) => LoginPage());
+            return MaterialPageRoute(builder: (context) => SplashPage());
         }
       },
     );

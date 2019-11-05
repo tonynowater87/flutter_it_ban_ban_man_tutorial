@@ -1,28 +1,26 @@
 import 'package:flutter/material.dart';
 
-
 final BlackTheme = ThemeData(
     primarySwatch: materialBlack,
     buttonTheme: ButtonThemeData(
-        buttonColor: materialBlack,
-        textTheme: ButtonTextTheme.primary
-    )
-);
+        buttonColor: materialBlack, textTheme: ButtonTextTheme.primary),
+    textTheme: TextTheme(
+        display1: TextStyle(fontSize: 36, color: materialBlack.withOpacity(0.8))));
 
 final BlueTheme = ThemeData(
   primarySwatch: Colors.blue,
-      buttonTheme: ButtonThemeData(
-        buttonColor: Colors.blue,
-        textTheme: ButtonTextTheme.primary
-      )
+  buttonTheme: ButtonThemeData(
+      buttonColor: Colors.blue, textTheme: ButtonTextTheme.primary),
+  textTheme: TextTheme(
+      display1: TextStyle(fontSize: 36, color: Colors.blue.withOpacity(0.8))),
 );
 
 final BlueGreyTheme = ThemeData(
   primarySwatch: Colors.blueGrey,
-      buttonTheme: ButtonThemeData(
-        buttonColor: Colors.blueGrey,
-        textTheme: ButtonTextTheme.primary
-      )
+  buttonTheme: ButtonThemeData(
+      buttonColor: Colors.blueGrey, textTheme: ButtonTextTheme.primary),
+  textTheme: TextTheme(
+      display1: TextStyle(fontSize: 36, color: Colors.blueGrey.withOpacity(0.8))),
 );
 
 const MaterialColor materialBlack = MaterialColor(
