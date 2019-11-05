@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hello_flutter/bloc/bloc_provider.dart';
 import 'package:hello_flutter/bloc/count_bloc.dart';
@@ -22,17 +23,45 @@ class _PageOneState extends State<PageOne> {
       builder: (context, AsyncSnapshot<int> count) {
         return Scaffold(
           appBar: AppBar(title: Text("Bloc Test Page 1")),
-          body: Center(
-            child: Text("count:${count.data}"),
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              _countBloc.increment();
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return PageTwo();
-              }));
-            },
-            child: Icon(Icons.arrow_forward),
+          body: Container(
+            child: Column(
+              children: <Widget>[
+                Text("count:${count.data}"),
+                FloatingActionButton(
+                  onPressed: () {
+                    _countBloc.increment();
+                    Navigator.of(context)
+                        .push(CupertinoPageRoute(builder: (context) {
+                      return PageTwo();
+                    }));
+                  },
+                  child: Icon(Icons.arrow_forward),
+                ),
+                Hero(
+                  tag: 'btn',
+                  transitionOnUserGestures: true,
+                  // ignore: missing_return
+                  flightShuttleBuilder: (flightContext, animation, direction,
+                      fromContext, toContext) {
+                    if(direction == HeroFlightDirection.push) { //出發
+                      return Icon(
+                        Icons.flash_on,
+                        size: 50.0,
+                      );
+                    } else if (direction == HeroFlightDirection.pop){ //回程
+                      return Icon(
+                        Icons.flash_on,
+                        size: 500.0,
+                      );
+                    }
+                  },
+                  child: Material(
+                      child: IconButton(
+                    icon: Icon(Icons.clear,size: 80,),
+                  )),
+                )
+              ],
+            ),
           ),
         );
       },
