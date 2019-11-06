@@ -32,15 +32,15 @@ class S implements WidgetsLocalizations {
   String get language_chinese => "Chinese";
   String get language_english => "English";
   String get language_system => "Follow System";
-  String get loading => "Loading...";
   String get login => "Login";
   String get login_auto_login => "Auto Login";
+  String get login_loading => "Login...";
   String get login_password => "password";
-  String get login_password_error_msg => "Please enter your password";
+  String get login_password_error_msg => "Not correct Password format";
   String get login_password_hint => "Your Github account password.";
   String get login_success => "Login Success";
   String get login_username => "Username";
-  String get login_username_error_msg => "Please enter your user name";
+  String get login_username_error_msg => "Not correct Username format";
   String get login_username_hint => "Your Github account user name.";
   String get main_hot_news => "Hot Hacker News";
   String get main_latest_news => "Latest Hacker News";
@@ -92,7 +92,7 @@ class $zh_TW extends S {
   @override
   String get repo => "倉庫";
   @override
-  String get login_username_error_msg => "請輸入你的使用者名稱/帳號";
+  String get login_username_error_msg => "使用者名稱/帳號格式不正確";
   @override
   String get about => "關於";
   @override
@@ -126,6 +126,8 @@ class $zh_TW extends S {
   @override
   String get login_password_hint => "你的Github密碼";
   @override
+  String get login_loading => "登入中...";
+  @override
   String get main_latest_news => "最近新聞";
   @override
   String get profile_following => "追隨中";
@@ -142,8 +144,6 @@ class $zh_TW extends S {
   @override
   String get search_repos => "搜尋倉庫";
   @override
-  String get loading => "讀取中...";
-  @override
   String get profile_follower => "追隨者";
   @override
   String get home => "首頁";
@@ -156,7 +156,7 @@ class $zh_TW extends S {
   @override
   String get trending_date_weekly => "週";
   @override
-  String get login_password_error_msg => "請輸入你的密碼";
+  String get login_password_error_msg => "密碼格式不正確";
   @override
   String get profile_repo => "倉庫";
   @override

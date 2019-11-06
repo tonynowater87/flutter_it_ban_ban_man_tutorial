@@ -21,7 +21,9 @@ class _GitHubLanguageColorLabelState extends State<GitHubLanguageColorLabel> {
     super.initState();
     searchLanguageColorHexString(widget.language).then((colorHexString) {
       setState(() {
-        languageColor = HexColor(colorHexString);
+        if (widget.language != null) {
+          languageColor = HexColor(colorHexString);
+        }
       });
     });
   }

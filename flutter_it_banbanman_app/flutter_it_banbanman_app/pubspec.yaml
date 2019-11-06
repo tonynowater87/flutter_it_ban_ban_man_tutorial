@@ -39,6 +39,7 @@ dependencies:
   # A mixture between dependency injection (DI) and state management, built with widgets for widgets.
   # https://pub.dev/packages/provider#-readme-tab-
   provider: ^3.1.0+1
+  flutter_bloc: ^0.21.0
 
 dev_dependencies:
   flutter_test:
