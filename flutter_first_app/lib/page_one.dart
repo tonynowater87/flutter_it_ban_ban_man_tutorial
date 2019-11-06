@@ -28,6 +28,7 @@ class _PageOneState extends State<PageOne> {
               children: <Widget>[
                 Text("count:${count.data}"),
                 FloatingActionButton(
+                  heroTag: 'forward',
                   onPressed: () {
                     _countBloc.increment();
                     Navigator.of(context)
@@ -35,36 +36,40 @@ class _PageOneState extends State<PageOne> {
                       return PageTwo();
                     }));
                   },
-                  child: Icon(Icons.arrow_forward),
+                  child: Icon(Icons.forward),
                 ),
-                Hero(
-                  tag: 'btn',
-                  transitionOnUserGestures: true,
-                  // ignore: missing_return
-                  flightShuttleBuilder: (flightContext, animation, direction,
-                      fromContext, toContext) {
-                    if(direction == HeroFlightDirection.push) { //出發
-                      return Icon(
-                        Icons.flash_on,
-                        size: 50.0,
-                      );
-                    } else if (direction == HeroFlightDirection.pop){ //回程
-                      return Icon(
-                        Icons.flash_on,
-                        size: 500.0,
-                      );
-                    }
-                  },
-                  child: Material(
-                      child: IconButton(
-                    icon: Icon(Icons.clear,size: 80,),
-                  )),
-                )
+                _buildHero()
               ],
             ),
           ),
         );
       },
     );
+  }
+
+  Hero _buildHero() {
+    return Hero(
+                tag: 'clear',
+                transitionOnUserGestures: true,
+                // ignore: missing_return
+                flightShuttleBuilder: (flightContext, animation, direction,
+                    fromContext, toContext) {
+                  if(direction == HeroFlightDirection.push) { //出發
+                    return Icon(
+                      Icons.flash_on,
+                      size: 50.0,
+                    );
+                  } else if (direction == HeroFlightDirection.pop){ //回程
+                    return Icon(
+                      Icons.flash_on,
+                      size: 500.0,
+                    );
+                  }
+                },
+                child: Material(
+                    child: IconButton(
+                  icon: Icon(Icons.clear,size: 80,),
+                )),
+              );
   }
 }

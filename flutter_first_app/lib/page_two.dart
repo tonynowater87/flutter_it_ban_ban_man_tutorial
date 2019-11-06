@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hello_flutter/bloc/bloc_provider.dart';
 import 'package:hello_flutter/bloc/count_bloc.dart';
+import 'package:hello_flutter/page_three.dart';
 
 class PageTwo extends StatefulWidget {
   PageTwo({Key key}) : super(key: key);
@@ -29,27 +30,43 @@ class _PageTwoState extends State<PageTwo> {
               children: <Widget>[
                 Text("count:${count.data}"),
                 FloatingActionButton(
+                  heroTag: 'add',
                   isExtended: true,
                   onPressed: () {
                     _countBloc.increment();
                   },
-                  child: Icon(Icons.arrow_forward),
+                  child: Icon(Icons.add),
                 ),
-                Hero(
-                    tag: 'btn',
-                    placeholderBuilder: (context, size, widget) {
-                      return Container(height: size.height, width: size.width, child: CircularProgressIndicator(),);
-                    },
-                    transitionOnUserGestures: true,
-                    child: Material(
-                        child: IconButton(
-                      icon: Icon(Icons.clear),
-                    )))
+                _buildHero()
               ],
             ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            heroTag: 'forward',
+            isExtended: true,
+            onPressed: () {
+              Navigator.of(context)
+                  .push(CupertinoPageRoute(builder: (context) {
+                return PageThree();
+              }));
+            },
+            child: Icon(Icons.forward),
           ),
         );
       },
     );
+  }
+
+  Hero _buildHero() {
+    return Hero(
+                  tag: 'clear',
+                  placeholderBuilder: (context, size, widget) {
+                    return Container(height: size.height, width: size.width, child: CircularProgressIndicator(),);
+                  },
+                  transitionOnUserGestures: true,
+                  child: Material(
+                      child: IconButton(
+                    icon: Icon(Icons.clear),
+                  )));
   }
 }
