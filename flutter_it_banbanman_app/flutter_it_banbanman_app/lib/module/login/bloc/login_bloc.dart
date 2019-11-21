@@ -8,6 +8,11 @@ import 'package:flutter_it_banbanman_app/module/login/bloc/validator.dart';
 import './bloc.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
+
+  final PreferencesRepository preferencesRepository;
+
+  LoginBloc({this.preferencesRepository});
+
   @override
   LoginState get initialState => LoginState.initial();
 
@@ -26,13 +31,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   Stream<LoginState> _userNameChange(String userName) async* {
     var validUserName = Validators.isValidUserName(userName);
-    print('[Tony] validUserName:$userName $validUserName');
+    //print('[Tony] validUserName:$userName $validUserName');
     yield currentState.update(isUserNameValid: validUserName);
   }
 
   Stream<LoginState> _passwordChange(String password) async* {
     var validPassword = Validators.isValidPassword(password);
-    print('[Tony] validUserName:$password $validPassword');
+    //print('[Tony] validUserName:$password $validPassword');
     yield currentState.update(isPasswordValid: validPassword);
   }
 
@@ -42,8 +47,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     try {
       gitHubClient = getGithubClient(useName: userName, password: password);
       var user = await gitHubClient.users.getCurrentUser();
-      PreferencesRepository().setUserName(userName);
-      PreferencesRepository().setUserPwd(password);
+      preferencesRepository.setUserName(userName);
+      preferencesRepository.setUserPwd(password);
       yield LoginState.success(user, userName, password);
     } catch (e) {
       yield LoginState.fail(e.toString());

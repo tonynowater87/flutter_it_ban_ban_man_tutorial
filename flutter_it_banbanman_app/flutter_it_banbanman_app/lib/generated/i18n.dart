@@ -23,6 +23,7 @@ class S implements WidgetsLocalizations {
 
   String get about => "About";
   String get activity => "Activity";
+  String get app_name => "Gitmme Reborn";
   String get dialog_cancel => "No";
   String get dialog_confirm => "Yes";
   String get dialog_logout_title => "Are you sure to logout?";
@@ -80,25 +81,15 @@ class $zh_TW extends S {
   @override
   String get trending => "趨勢";
   @override
-  String get main_hot_news => "熱門新聞";
-  @override
-  String get activity => "活動";
-  @override
   String get language_english => "英文";
   @override
   String get search_users => "搜尋使用者";
   @override
   String get dialog_confirm => "確定";
   @override
-  String get repo => "倉庫";
-  @override
-  String get login_username_error_msg => "使用者名稱/帳號格式不正確";
-  @override
   String get about => "關於";
   @override
   String get language => "語言";
-  @override
-  String get login => "登入";
   @override
   String get issues => "議題";
   @override
@@ -108,31 +99,15 @@ class $zh_TW extends S {
   @override
   String get dialog_cancel => "取消";
   @override
-  String get search => "搜尋";
-  @override
-  String get language_system => "跟隨系統";
-  @override
   String get login_password => "密碼";
   @override
   String get main_trending => "Github 趨勢...";
-  @override
-  String get trending_date_daily => "天";
-  @override
-  String get theme => "主題";
-  @override
-  String get profile_star => "星星";
   @override
   String get profile_no_location => "尚無地區";
   @override
   String get login_password_hint => "你的Github密碼";
   @override
   String get login_loading => "登入中...";
-  @override
-  String get main_latest_news => "最近新聞";
-  @override
-  String get profile_following => "追隨中";
-  @override
-  String get trending_date_monthly => "月";
   @override
   String get language_chinese => "中文";
   @override
@@ -142,23 +117,51 @@ class $zh_TW extends S {
   @override
   String get profile_no_bio => "尚無介紹";
   @override
+  String get login_success => "登入成功";
+  @override
+  String get login_password_error_msg => "密碼格式不正確";
+  @override
+  String get profile_repo => "倉庫";
+  @override
+  String get main_hot_news => "熱門新聞";
+  @override
+  String get activity => "活動";
+  @override
+  String get repo => "倉庫";
+  @override
+  String get login_username_error_msg => "使用者名稱/帳號格式不正確";
+  @override
+  String get login => "登入";
+  @override
+  String get search => "搜尋";
+  @override
+  String get language_system => "跟隨系統";
+  @override
+  String get trending_date_daily => "天";
+  @override
+  String get theme => "主題";
+  @override
+  String get profile_star => "星星";
+  @override
+  String get main_latest_news => "最近新聞";
+  @override
+  String get profile_following => "追隨中";
+  @override
+  String get trending_date_monthly => "月";
+  @override
   String get search_repos => "搜尋倉庫";
   @override
   String get profile_follower => "追隨者";
   @override
   String get home => "首頁";
   @override
-  String get login_success => "登入成功";
-  @override
   String get dialog_logout_title => "確定登出？";
+  @override
+  String get app_name => "Gitmme 重生";
   @override
   String get login_username_hint => "你的Github使用者名稱/帳號";
   @override
   String get trending_date_weekly => "週";
-  @override
-  String get login_password_error_msg => "密碼格式不正確";
-  @override
-  String get profile_repo => "倉庫";
   @override
   String get trending_project => "倉庫";
   @override

@@ -30,9 +30,10 @@ class _SplashPageState extends State<SplashPage>
   }
 
   void init() async {
-    bool autoLogin = await PreferencesRepository().getAutoLogin();
-    String userName = await PreferencesRepository().getUserName();
-    String password = await PreferencesRepository().getUserPwd();
+    var preferencesRepository = PreferencesRepository();
+    bool autoLogin = await preferencesRepository.getAutoLogin();
+    String userName = await preferencesRepository.getUserName();
+    String password = await preferencesRepository.getUserPwd();
 
     _animationController.addStatusListener((status) {
       var isAutoLogin = autoLogin && userName.isNotEmpty && password.isNotEmpty;
@@ -74,7 +75,7 @@ class _SplashPageState extends State<SplashPage>
                     tag: 'splash-image',
                     child: Image.asset("assets/images/login_sign.png",
                         width: 300, height: 200)),
-                Text('Gitmme Reborn',
+                Text(S.of(context).app_name,
                     style: Theme.of(context).textTheme.display1,
                     textAlign: TextAlign.center)
               ])))),

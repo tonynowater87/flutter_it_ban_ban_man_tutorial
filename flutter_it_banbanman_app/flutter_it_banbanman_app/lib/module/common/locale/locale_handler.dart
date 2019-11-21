@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:flutter_it_banbanman_app/module/common/const.dart';
+
 abstract class LocaleHandler {
 
   bool isTC(Locale locale) =>
@@ -14,13 +16,11 @@ abstract class LocaleHandler {
   resolveLocale(Locale locale, Iterable<Locale> supported) {
 
     if (locale == null) {
-      return Locale("en", "");
+      return Locale_EN;
     } else if (isTC(locale)) {
-      return Locale("zh", "TW");
-    } else if (locale.languageCode == "zh") {
-      return Locale("zh", "TW");
+      return Locale_ZH;
     } else {
-      return Locale("en", "");
+      return Locale_EN;
     }
   }
 }

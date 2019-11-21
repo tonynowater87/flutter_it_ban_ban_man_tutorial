@@ -18,6 +18,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'about/about.dart';
 import 'common/locale/locale_handler.dart';
 import 'common/locale/overriden_localization_delegate.dart';
+import 'common/preference_repository.dart';
 import 'common/routes.dart';
 import 'login/login_page.dart';
 import 'main/main.dart';
@@ -27,12 +28,21 @@ Future main() async {
   BlocSupervisor.delegate = SimpleBlocDelegate();
   print('[Tony] app onCreate');
   await DotEnv().load('.env');
+  String localeString = await PreferencesRepository().getLocale();
   String token = DotEnv().env["GITHUB_TOKEN"];
   print('[Tony] Token:$token');
+  print('[Tony] LanguageCode:$localeString');
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(builder: (BuildContext context) => AccountModel()),
-      ChangeNotifierProvider(builder: (BuildContext context) => SettingModel())
+      ChangeNotifierProvider(builder: (BuildContext context) {
+        var settingModel = SettingModel();
+        if (localeString != null && localeString.isNotEmpty) {
+          var locale = localeString.split("_");
+          settingModel.changeLocale(Locale(locale[0],locale[1]));
+        }
+        return settingModel;
+      })
     ],
     child: GitmeRebornApp(),
   ));
@@ -43,9 +53,9 @@ class GitmeRebornApp extends StatelessWidget with LocaleHandler {
   @override
   Widget build(BuildContext context) {
     final setting = Provider.of<SettingModel>(context);
-
+    var appLocale = setting.locale;
+    print('[Tony] App locale:$appLocale');
     return MaterialApp(
-      title: "Gitmme Reborn",
       theme: setting.themeData,
       routes: {
         RoutesTable.splash: (context) => _appendLoginBloc(SplashPage()),
@@ -58,7 +68,7 @@ class GitmeRebornApp extends StatelessWidget with LocaleHandler {
         RoutesTable.about: (context) => AboutPage(),
       },
       localizationsDelegates: [
-        OverriddenLocalizationsDelegate(setting.locale),
+        OverriddenLocalizationsDelegate(appLocale),
         S.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -82,6 +92,6 @@ class GitmeRebornApp extends StatelessWidget with LocaleHandler {
   }
   Widget _appendLoginBloc(Widget widget) {
     return BlocProvider(
-        builder: (context) => LoginBloc(), child: widget);
+        builder: (context) => LoginBloc(preferencesRepository: PreferencesRepository()), child: widget);
   }
 }

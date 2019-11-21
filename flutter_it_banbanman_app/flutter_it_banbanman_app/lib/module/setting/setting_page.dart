@@ -58,7 +58,7 @@ class SettingPage extends StatelessWidget {
             trailing: Wrap(
               crossAxisAlignment: WrapCrossAlignment.center,
               children: <Widget>[
-                Text(getLanguageName(context, setting.language)),
+                Text(getLanguageName(context, setting.locale)),
                 Icon(Icons.keyboard_arrow_right)
               ],
             ),

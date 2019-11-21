@@ -7,19 +7,11 @@ class SettingModel extends ChangeNotifier {
   ThemeData _themeData = BlueGreyTheme;
   ThemeData get themeData => _themeData;
 
-  Language _language = Language.System;
-  Language get language => _language;
-
   Locale _locale;
   Locale get locale => _locale;
 
   changeTheme(themeData) {
     _themeData = themeData;
-    notifyListeners();
-  }
-
-  changeLanguage(language) {
-    _language = language;
     notifyListeners();
   }
 
